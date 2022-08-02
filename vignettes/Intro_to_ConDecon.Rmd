@@ -1,0 +1,55 @@
+---
+title: "Introduction to ConDecon"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to ConDecon}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+ConDecon is a clustering-independent method for estimating cell abundances in bulk tissues using single-cell RNA-seq data.
+
+```{r setup}
+library(ConDecon)
+```
+
+ConDecon requires 4 input files:
+1. Single-cell count matrix
+2. Latent space of the single-cell data
+3. Variable features associated with the single-cell data
+4. Bulk data
+
+The ConDecon package includes example files of these data.
+
+```{r}
+# 1
+data("counts_gps")
+# 2
+data("latent_gps")
+# 3
+data("variable_genes_gps")
+# 4
+data("bulk_gps")
+```
+
+Let's run ConDecon:
+
+```{r}
+condecon_object = RunConDecon(counts = counts_gps, latent = latent_gps, variable.features = variable_genes_gps, bulk = bulk_gps, dims = 10)
+```
+
+Plot the predicted cell abundances for each of the 5 bulk samples:
+
+```{r}
+## load a UMAP 2D embedding of the single-cell data
+data("umap_embedding_gps")
+
+PlotConDecon(ConDecon = condecon_object, umap = umap_embedding_gps)
+```
