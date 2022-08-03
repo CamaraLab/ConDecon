@@ -1,5 +1,5 @@
 Package: ConDecon
-Title: Continuous deconvolution of bulk data using single-cell data as a reference.
+Title: Continuous deconvolution of bulk data using single-cell data as a reference
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Rachael",
