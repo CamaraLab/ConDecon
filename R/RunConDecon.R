@@ -154,7 +154,7 @@ RunConDecon <- function(counts,
       warning("The number of latent dimensions used to create TrainingSet (TrainingSet$dims)\n
               is different from input dims")
     }
-    output$TrainingSet <- trainingset
+    output <- trainingset
   }
 
   if(verbose == TRUE){
