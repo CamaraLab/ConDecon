@@ -30,7 +30,8 @@
 #' data(bulk_gps)
 #' data(variable_genes_gps)
 #'
-#' ConDecon_obj = RunConDecon(counts = counts_gps, latent = latent_gps, bulk = bulk_gps, variable.features = variable_genes_gps)
+#' ConDecon_obj = RunConDecon(counts = counts_gps, latent = latent_gps,
+#' bulk = bulk_gps, variable.features = variable_genes_gps)
 RunConDecon <- function(counts,
                       latent,
                       bulk,
@@ -160,7 +161,7 @@ RunConDecon <- function(counts,
   if(verbose == TRUE){
     message("Map2Latent")
   }
-  output <- Map2Latent(output$TrainingSet, latent, counts, variable.features)
+  output <- Map2Latent(output, latent, counts, variable.features)
 
   if(verbose == TRUE){
     message("BuildModel")

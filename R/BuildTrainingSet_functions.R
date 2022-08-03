@@ -43,8 +43,8 @@ BuildTrainingSet <- function(count,
 
   tot.cells <- ncol(count)
 
-  output$latent_distance <- as.matrix(stats::dist(latent[,1:dims,drop=F]))
-  output$dims <- dims
+  output$TrainingSet$latent_distance <- as.matrix(stats::dist(latent[,1:dims,drop=F]))
+  output$TrainingSet$dims <- dims
 
   N <- ncol(count)
 
@@ -66,11 +66,11 @@ BuildTrainingSet <- function(count,
     N_max <- round(sigma_max_cells)
   }
   k <- N_max
-  knn <- t(apply(output$latent_distance, 1, function(i){
+  knn <- t(apply(output$TrainingSet$latent_distance, 1, function(i){
     order(i, decreasing = F)[1:k]
   }))
   knn_dist <- t(apply(knn, 1, function(i){
-    output$latent_distance[i[1],i]
+    output$TrainingSet$latent_distance[i[1],i]
   }))
   k_dist <- colMeans(knn_dist)
   error.sigma.max <- FALSE
@@ -82,11 +82,11 @@ BuildTrainingSet <- function(count,
 
   # Find sigma min
   k <- N_min
-  knn <- t(apply(output$latent_distance, 1, function(i){
+  knn <- t(apply(output$TrainingSet$latent_distance, 1, function(i){
     order(i, decreasing = F)[1:k]
   }))
   knn_dist <- t(apply(knn, 1, function(i){
-    output$latent_distance[i[1],i]
+    output$TrainingSet$latent_distance[i[1],i]
   }))
   k_dist <- colMeans(knn_dist)
   # sigma_min <- uniroot(Find_Sigma, x_i=seq(0,max(k_dist), by = 0.01), width = 0.01, lower=min(knn_dist[knn_dist>0]), upper=max(knn_dist))$root
@@ -111,46 +111,45 @@ BuildTrainingSet <- function(count,
 
   ### SELECT TRAINING PARAMETERS ###
 
-  output$parameters <- matrix(0, ncol = (1+max.cent*3), nrow = max.iter, dimnames =
+  output$TrainingSet$parameters <- matrix(0, ncol = (1+max.cent*3), nrow = max.iter, dimnames =
                                 list(NULL,c("num.centers",paste0("center.",1:max.cent),
                                             paste0("sigma.",1:max.cent),paste0("mix.",1:max.cent))))
 
   # Randomly choose the parameters of a Gaussian mixture model for each training set
   ## Choose number of centers
-  output$parameters[,1] <- sample(min.cent:max.cent,max.iter, replace = TRUE)
+  output$TrainingSet$parameters[,1] <- sample(min.cent:max.cent,max.iter, replace = TRUE)
 
   ## Choose centers, sigma, and constant
   ## Find the cell probabilities
-  output$cell.prob <- matrix(0, ncol = max.iter, nrow = tot.cells)
+  output$TrainingSet$cell.prob <- matrix(0, ncol = max.iter, nrow = tot.cells)
   for(i in 1:max.iter){
 
     # Choose sigma
-    output$parameters[i,(2+max.cent):(1+max.cent+output$parameters[i,1])] <-
-      sample(10^seq(log10(sigma_min), log10(sigma_max), by = 0.0001), output$parameters[i,1],
+    output$TrainingSet$parameters[i,(2+max.cent):(1+max.cent+output$TrainingSet$parameters[i,1])] <-
+      sample(10^seq(log10(sigma_min), log10(sigma_max), by = 0.0001), output$TrainingSet$parameters[i,1],
              replace=TRUE)
 
     # Choose mixture between [1:100]
-    mixture <- sample(1:100,output$parameters[i,1], replace=TRUE)
-    # mixture <- rep(100/output$parameters[i,1], output$parameters[i,1])
-    output$parameters[i,(2+max.cent*2):(1+max.cent*2+output$parameters[i,1])] <- mixture/sum(mixture)
+    mixture <- sample(1:100,output$TrainingSet$parameters[i,1], replace=TRUE)
+    # mixture <- rep(100/output$TrainingSet$parameters[i,1], output$TrainingSet$parameters[i,1])
+    output$TrainingSet$parameters[i,(2+max.cent*2):(1+max.cent*2+output$TrainingSet$parameters[i,1])] <- mixture/sum(mixture)
 
     # Choose which cells will be the centers
-    output$parameters[i,2:(1+output$parameters[i,1])] <-
-      sample(1:tot.cells,output$parameters[i,1],replace = FALSE)
+    output$TrainingSet$parameters[i,2:(1+output$TrainingSet$parameters[i,1])] <-
+      sample(1:tot.cells,output$TrainingSet$parameters[i,1],replace = FALSE)
 
     # Cell Prob
-    output$cell.prob[,i] <- CellProb(parameters = output$parameters[i,], latent_distance = output$latent_distance,
+    output$TrainingSet$cell.prob[,i] <- CellProb(parameters = output$TrainingSet$parameters[i,], latent_distance = output$TrainingSet$latent_distance,
                                      max.cent = max.cent, tot.cells=tot.cells)
   }
   gc(verbose = FALSE)
 
-  pick.cells <- PickCells(max.iter, step, output$cell.prob, max.cent, tot.cells, n, verbose)
+  pick.cells <- PickCells(max.iter, step, output$TrainingSet$cell.prob, max.cent, tot.cells, n, verbose)
   #rm(cell.prob)
   gc(verbose = FALSE)
 
   #Aggregate single-cell expression weighted by GMM to create synthetic bulk
-  output$synthetic_bulk <- BulkCells(pick.cells, max.iter, step, max.cent, tot.cells, n, count, verbose)
-  output$TrainingSet <- output
+  output$TrainingSet$synthetic_bulk <- BulkCells(pick.cells, max.iter, step, max.cent, tot.cells, n, count, verbose)
   return(output)
 }
 

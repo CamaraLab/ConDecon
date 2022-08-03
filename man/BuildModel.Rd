@@ -23,7 +23,7 @@ data(latent_gps)
 data(variable_genes_gps)
 
 TrainingSet = BuildTrainingSet(count = counts_gps, latent = latent_gps)
-ConDecon_obj = Map2Latent(TrainingSet = TrainingSet, latent = latent_gps, count = counts_gps,
+ConDecon_obj = Map2Latent(output = TrainingSet, latent = latent_gps, count = counts_gps,
 variable.features = variable_genes_gps)
 
 ConDecon_obj = BuildModel(ConDecon_obj)

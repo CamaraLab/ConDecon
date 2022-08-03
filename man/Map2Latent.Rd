@@ -4,10 +4,10 @@
 \alias{Map2Latent}
 \title{Map2Latent}
 \usage{
-Map2Latent(TrainingSet, latent, count, variable.features)
+Map2Latent(output, latent, count, variable.features)
 }
 \arguments{
-\item{TrainingSet}{Training set object}
+\item{output}{Training set object}
 
 \item{latent}{matrix of single-cell latent space (cells x dims)}
 
@@ -30,6 +30,6 @@ data(variable_genes_gps)
 
 TrainingSet = BuildTrainingSet(count = counts_gps, latent = latent_gps)
 
-ConDecon_obj = Map2Latent(TrainingSet = TrainingSet, latent = latent_gps, count = counts_gps,
+ConDecon_obj = Map2Latent(output = TrainingSet, latent = latent_gps, count = counts_gps,
 variable.features = variable_genes_gps)
 }

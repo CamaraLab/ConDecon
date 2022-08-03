@@ -68,5 +68,6 @@ data(latent_gps)
 data(bulk_gps)
 data(variable_genes_gps)
 
-ConDecon_obj = RunConDecon(counts = counts_gps, latent = latent_gps, bulk = bulk_gps, variable.features = variable_genes_gps)
+ConDecon_obj = RunConDecon(counts = counts_gps, latent = latent_gps,
+bulk = bulk_gps, variable.features = variable_genes_gps)
 }

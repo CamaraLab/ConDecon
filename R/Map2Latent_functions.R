@@ -2,7 +2,7 @@
 #' @description Use the latent space to expand the distributions
 #' of cell abundances and correlations on a basis of functions
 #' @importFrom stats lm cor
-#' @param TrainingSet Training set object
+#' @param output Training set object
 #' @param latent matrix of single-cell latent space (cells x dims)
 #' @param count single-cell count matrix (features x cells)
 #' @param variable.features character vector of variable features
@@ -18,22 +18,22 @@
 #'
 #' TrainingSet = BuildTrainingSet(count = counts_gps, latent = latent_gps)
 #'
-#' ConDecon_obj = Map2Latent(TrainingSet = TrainingSet, latent = latent_gps, count = counts_gps,
+#' ConDecon_obj = Map2Latent(output = TrainingSet, latent = latent_gps, count = counts_gps,
 #' variable.features = variable_genes_gps)
-Map2Latent <- function(TrainingSet,
+Map2Latent <- function(output,
                        latent,
                        count,
                        variable.features){
 
 
-  TrainingSet$latent <- as.matrix(latent[,1:TrainingSet$dims])
+  output$TrainingSet$latent <- as.matrix(latent[,1:output$TrainingSet$dims])
 
   #Coefficients for cell prob (no intercept)
-  TrainingSet$cell.prob_coefficients <- stats::lm(TrainingSet$cell.prob ~ TrainingSet$latent + 0)$coefficients
+  output$TrainingSet$cell.prob_coefficients <- stats::lm(output$TrainingSet$cell.prob ~ output$TrainingSet$latent + 0)$coefficients
 
   #Find index of KNN for dist matrix
   k <- 5
-  knn <- t(apply(TrainingSet$latent_distance, 1, function(i){
+  knn <- t(apply(output$TrainingSet$latent_distance, 1, function(i){
     order(i, decreasing = F)[1:k]
   }))
 
@@ -42,12 +42,12 @@ Map2Latent <- function(TrainingSet,
   gene.index <- GeneIndex(knn, count, variable.features)
 
   #Correlation btwn synthetic bulk and single-cell data
-  TrainingSet$bulk_nn <- CorBulk(TrainingSet$synthetic_bulk, variable.features, gene.index)
+  output$TrainingSet$bulk_nn <- CorBulk(output$TrainingSet$synthetic_bulk, variable.features, gene.index)
 
   #Coefficients for synthetic bulk
-  TrainingSet$bulk_coefficients <- stats::lm(TrainingSet$bulk_nn ~ TrainingSet$latent + 0)$coefficients
-  TrainingSet$TrainingSet <- TrainingSet
-  return(TrainingSet)
+  output$TrainingSet$bulk_coefficients <- stats::lm(output$TrainingSet$bulk_nn ~ output$TrainingSet$latent + 0)$coefficients
+
+  return(output)
 }
 
 #' GeneIndex
