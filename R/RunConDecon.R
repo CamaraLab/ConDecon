@@ -150,6 +150,7 @@ RunConDecon <- function(counts,
     output <- BuildTrainingSet(counts, latent, max.iter, max.cent, step, dims,
                                            min.cent, n, sigma_min_cells = sigma_min_cells,
                                            sigma_max_cells = sigma_max_cells, verbose = verbose)
+
   } else {
     if(trainingset$dims != dims){
       warning("The number of latent dimensions used to create TrainingSet (TrainingSet$dims)\n
@@ -161,7 +162,7 @@ RunConDecon <- function(counts,
   if(verbose == TRUE){
     message("Map2Latent")
   }
-  output <- Map2Latent(output, latent, counts, variable.features)
+  output <- Map2Latent(output, latent, counts, bulk, variable.features)
 
   if(verbose == TRUE){
     message("BuildModel")

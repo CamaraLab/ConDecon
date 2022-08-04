@@ -5,6 +5,7 @@
 #' @param output Training set object
 #' @param latent matrix of single-cell latent space (cells x dims)
 #' @param count single-cell count matrix (features x cells)
+#' @param bulk matrix of query bulk data (features x samples)
 #' @param variable.features character vector of variable features
 #'
 #' @return ConDecon object with low dimensional embedding of the space
@@ -14,16 +15,30 @@
 #' @examples
 #' data(counts_gps)
 #' data(latent_gps)
+#' data(bulk_gps)
 #' data(variable_genes_gps)
 #'
 #' TrainingSet = BuildTrainingSet(count = counts_gps, latent = latent_gps)
 #'
 #' ConDecon_obj = Map2Latent(output = TrainingSet, latent = latent_gps, count = counts_gps,
-#' variable.features = variable_genes_gps)
+#' bulk = bulk_gps, variable.features = variable_genes_gps)
 Map2Latent <- function(output,
                        latent,
                        count,
+                       bulk,
                        variable.features){
+
+  #Variable features must be located in bulk AND single-cell data
+  counts_genes <- unique(match(row.names(bulk), row.names(count)))
+  count <- count[counts_genes[!is.na(counts_genes)],,drop=F]
+  bulk_genes <- unique(match(row.names(count), row.names(bulk)))
+  bulk <- bulk[bulk_genes[!is.na(bulk_genes)],,drop=F]
+  bulk <- bulk[row.names(count),,drop=F]
+
+  which_features <- unique(c(match(row.names(count), variable.features), match(row.names(bulk),
+                                                                               variable.features)))
+  which_features <- which_features[!is.na(which_features)]
+  variable.features <- variable.features[which_features]
 
 
   output$TrainingSet$latent <- as.matrix(latent[,1:output$TrainingSet$dims])
