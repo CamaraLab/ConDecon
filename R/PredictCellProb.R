@@ -27,7 +27,12 @@ PredictCellProb <- function(bulk,
                             variable.features,
                             output){
 
-  #Variable features must be located in bulk and single-cell data
+  counts_genes <- unique(match(row.names(bulk), row.names(count)))
+  count <- count[counts_genes[!is.na(counts_genes)],,drop=F]
+  bulk_genes <- unique(match(row.names(count), row.names(bulk)))
+  bulk <- bulk[bulk_genes[!is.na(bulk_genes)],,drop=F]
+  bulk <- bulk[row.names(count),,drop=F]
+  #Variable features must be located in bulk AND single-cell data
   which_features <- unique(c(match(row.names(count), variable.features), match(row.names(bulk),
                                                                                 variable.features)))
   which_features <- which_features[!is.na(which_features)]
