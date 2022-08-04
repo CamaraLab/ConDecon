@@ -27,6 +27,12 @@ PredictCellProb <- function(bulk,
                             variable.features,
                             output){
 
+  #Variable features must be located in bulk and single-cell data
+  which_features <- unique(c(match(row.names(count), variable.features), match(row.names(bulk),
+                                                                                variable.features)))
+  which_features <- which_features[!is.na(which_features)]
+  variable.features <- variable.features[which_features]
+
   k <- 5
   knn <- t(apply(output$TrainingSet$latent_distance, 1, function(i){
     order(i, decreasing = F)[1:k]
