@@ -152,7 +152,11 @@ RunConDecon <- function(counts,
                                            sigma_max_cells = sigma_max_cells, verbose = verbose)
 
   } else {
-    if(trainingset$dims != dims){
+    if(!("TrainingSet" %in% names(trainingset))){
+      message("training set does not exist")
+      return(NULL)
+    }
+    if(trainingset$TrainingSet$dims != dims){
       warning("The number of latent dimensions used to create TrainingSet (TrainingSet$dims)\n
               is different from input dims")
     }
