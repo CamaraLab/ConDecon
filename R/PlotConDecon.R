@@ -57,7 +57,7 @@ PlotConDecon <- function(ConDecon_obj,
   ##Which cells to plot
   if(is.null(cells)){
     norm_cell.prob <- ConDecon_obj$norm_cell.prob
-  } else if (length(cells) > ncol(ConDecon_obj$norm_cell.prob)){
+  } else if (length(cells) > nrow(ConDecon_obj$norm_cell.prob)){
     message("The length of parameter cells is greater than the number of cells in
             ConDecon_obj$norm_cell.prob")
     return(NULL)
@@ -79,15 +79,17 @@ PlotConDecon <- function(ConDecon_obj,
     sd_prob <- matrixStats::rowSds(norm_cell.prob)
   }
 
-  ConDecon_obj$relative_prob <- NULL
+  ConDecon_obj$relative_cell.prob <- NULL
   for (i in samples){
     subtract_avg <- (norm_cell.prob[,i]- avg_prob)/sd_prob
-    ConDecon_obj$relative_prob <- cbind(ConDecon_obj$relative_prob, subtract_avg)
+    ConDecon_obj$relative_cell.prob <- cbind(ConDecon_obj$relative_cell.prob, subtract_avg)
 
+    ##scale_color_gradient2(low = "blue", high = "red", mid = "gray")
     graphics::plot(ggplot(umap, aes(x=UMAP_1, y=UMAP_2, color = subtract_avg)) +
-           geom_point(size = pt.size) + scale_color_gradient2(low = "blue", high = "red",
-                                                              mid = "gray") +
+           geom_point(size = pt.size) + scale_color_gradient2(low = "#011F5B", high = "#990000",
+                                                              mid = "light gray") +
            labs(color = "Cell Prob\nz-score", title = title_names[i]) + theme_classic())
   }
+  colnames(ConDecon_obj$relative_cell.prob) = title_names
   invisible(ConDecon_obj)
 }
