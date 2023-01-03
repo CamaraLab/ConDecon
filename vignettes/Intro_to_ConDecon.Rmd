@@ -21,6 +21,7 @@ library(ConDecon)
 ```
 
 ConDecon requires 4 input files:
+
 1. Single-cell count matrix
 2. Latent space of the single-cell data
 3. Variable features associated with the single-cell data
