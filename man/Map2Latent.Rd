@@ -4,7 +4,7 @@
 \alias{Map2Latent}
 \title{Map2Latent}
 \usage{
-Map2Latent(output, latent, count, variable.features)
+Map2Latent(output, latent, count, bulk, variable.features)
 }
 \arguments{
 \item{output}{Training set object}
@@ -12,6 +12,8 @@ Map2Latent(output, latent, count, variable.features)
 \item{latent}{matrix of single-cell latent space (cells x dims)}
 
 \item{count}{single-cell count matrix (features x cells)}
+
+\item{bulk}{matrix of query bulk data (features x samples)}
 
 \item{variable.features}{character vector of variable features}
 }
@@ -26,10 +28,11 @@ of cell abundances and correlations on a basis of functions
 \examples{
 data(counts_gps)
 data(latent_gps)
+data(bulk_gps)
 data(variable_genes_gps)
 
 TrainingSet = BuildTrainingSet(count = counts_gps, latent = latent_gps)
 
 ConDecon_obj = Map2Latent(output = TrainingSet, latent = latent_gps, count = counts_gps,
-variable.features = variable_genes_gps)
+bulk = bulk_gps, variable.features = variable_genes_gps)
 }

@@ -9,7 +9,7 @@
 #' @import Matrix
 #' @param ConDecon_obj ConDecon object (output from RunConDecon)
 #' @param umap 2-dimensional coordinates of reference single-cell data (default = first 2 dimensions of latent space)
-#' @param samples character vector of the name(s) of the query bulk sample(s) (default = NULL)
+#' @param samples character vector of the name(s) of the query bulk sample(s) to plot; relative probability will still be calculated between all sample(s) (default = NULL)
 #' @param pt.size size of the points plotted (default = 1)
 #' @param rm_outliers Boolean indicating whether to remove outlier cell probability values from the z-score calculation based on +- 1.5*IQR (default = FALSE)
 #' @param cells vector of cell names/index indicating which cells from the reference single-cell data to plot (default = NULL, plot all cells)

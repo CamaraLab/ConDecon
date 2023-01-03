@@ -6,9 +6,9 @@
 #' @param latent matrix of single-cell latent space (cells x dims)
 #' @param bulk matrix of query bulk data (features x samples)
 #' @param variable.features character vector of the most variable features
-#' @param max.iter size of the training dataset (default = 10,000)
+#' @param max.iter size of the training dataset (default = 5,000)
 #' @param max.cent max number of centers in the Gaussian (default = 5)
-#' @param dims number of dimensions from latent (default = ncol(latent))
+#' @param dims number of dimensions from latent (default = 10)
 #' @param degree degree of the polynomial used
 #' @param step manually parallelize building the training dataset
 #' @param min.cent min number of centers in the Gaussian (default = 1)
@@ -19,7 +19,7 @@
 #' deviation of the Gaussian
 #' @param sigma_max_cells max number of cells that should be captured by the standard
 #' deviation of the Gaussian
-#' @param verbose logical indicating whether to print progress (default = TRUE)
+#' @param verbose logical indicating whether to print progress (default = FALSE)
 #'
 #' @return ConDecon object with continuous deconvolution results
 #' @export
@@ -38,7 +38,7 @@ RunConDecon <- function(counts,
                       variable.features,
                       max.iter = 5000,
                       max.cent = 5,
-                      dims = ncol(latent),
+                      dims = 10,
                       degree = 1,
                       step = ifelse(max.iter <= 10000, max.iter, 10000),
                       min.cent= 1,
@@ -120,7 +120,7 @@ RunConDecon <- function(counts,
   tot.cells <- ncol(counts)
   if(nrow(latent) != tot.cells | ncol(latent) <2){
     message("number of rows in latent must be equal to number of cells (columns) of counts;
-            number of columns in latent must be greater than or equal to two")
+            \nnumber of columns in latent must be greater than or equal to two")
     return(NULL)
   }
 
@@ -135,8 +135,7 @@ RunConDecon <- function(counts,
   which_features <- which_features[!is.na(which_features)]
   variable.features <- variable.features[which_features]
   if(verbose == TRUE){
-    cat(paste0("There are ", length(variable.features), " variable.features in both the counts and
-             bulk data\n"))
+    cat(paste0("There are ", length(variable.features), " variable.features in both the counts and bulk data\n"))
   }
 
   output <- NULL
@@ -157,8 +156,7 @@ RunConDecon <- function(counts,
       return(NULL)
     }
     if(trainingset$TrainingSet$dims != dims){
-      warning("The number of latent dimensions used to create TrainingSet (TrainingSet$dims)\n
-              is different from input dims")
+      warning("The number of latent dimensions used to create TrainingSet (TrainingSet$dims) is different from input dims\n")
     }
     output <- trainingset
   }
@@ -178,4 +176,6 @@ RunConDecon <- function(counts,
   }
   output <- PredictCellProb(bulk, counts, variable.features, output)
 
+  class(output) = "ConDecon"
+  return(output)
 }

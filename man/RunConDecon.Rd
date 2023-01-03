@@ -9,9 +9,9 @@ RunConDecon(
   latent,
   bulk,
   variable.features,
-  max.iter = 10000,
+  max.iter = 5000,
   max.cent = 5,
-  dims = ncol(latent),
+  dims = 10,
   degree = 1,
   step = ifelse(max.iter <= 10000, max.iter, 10000),
   min.cent = 1,
@@ -31,11 +31,11 @@ RunConDecon(
 
 \item{variable.features}{character vector of the most variable features}
 
-\item{max.iter}{size of the training dataset (default = 10,000)}
+\item{max.iter}{size of the training dataset (default = 5,000)}
 
 \item{max.cent}{max number of centers in the Gaussian (default = 5)}
 
-\item{dims}{number of dimensions from latent (default = ncol(latent))}
+\item{dims}{number of dimensions from latent (default = 10)}
 
 \item{degree}{degree of the polynomial used}
 
@@ -54,7 +54,7 @@ deviation of the Gaussian}
 \item{sigma_max_cells}{max number of cells that should be captured by the standard
 deviation of the Gaussian}
 
-\item{verbose}{logical indicating whether to print progress (default = TRUE)}
+\item{verbose}{logical indicating whether to print progress (default = FALSE)}
 }
 \value{
 ConDecon object with continuous deconvolution results

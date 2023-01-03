@@ -19,7 +19,7 @@ PlotConDecon(
 
 \item{umap}{2-dimensional coordinates of reference single-cell data (default = first 2 dimensions of latent space)}
 
-\item{samples}{character vector of the name(s) of the query bulk sample(s) (default = NULL)}
+\item{samples}{character vector of the name(s) of the query bulk sample(s) to plot; relative probability will still be calculated between all sample(s) (default = NULL)}
 
 \item{pt.size}{size of the points plotted (default = 1)}
 
