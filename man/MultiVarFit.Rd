@@ -7,10 +7,18 @@
 MultiVarFit(i, cell.prob.coef, bulk.coef, degree, dims)
 }
 \arguments{
-\item{dims}{}
+\item{i}{The current dimension}
+
+\item{cell.prob.coef}{The fit model coefficients for the space of cell abundances}
+
+\item{bulk.coef}{The fit model coefficients for the space of rank correlations}
+
+\item{degree}{The degree of the polynomial}
+
+\item{dims}{The total number of dimensions of the latent space}
 }
 \value{
-
+model from stats::lm
 }
 \description{
 MultiVarFit

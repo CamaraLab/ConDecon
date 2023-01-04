@@ -7,10 +7,12 @@
 GeneIndex_subfxn(i, geneID)
 }
 \arguments{
-\item{geneID}{}
+\item{i}{Bulk sample}
+
+\item{geneID}{Vector with index of variable features}
 }
 \value{
-
+Numeric vector of gene rank
 }
 \description{
 GeneIndex_subfxn

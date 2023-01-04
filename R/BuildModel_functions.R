@@ -39,15 +39,13 @@ BuildModel <- function(output,
 
 #' MultiVarFit
 #' @importFrom stats lm as.formula
-#' @param i
-#' @param cell.prob.coef
-#' @param bulk.coef
-#' @param degree
-#' @param dims
+#' @param i The current dimension
+#' @param cell.prob.coef The fit model coefficients for the space of cell abundances
+#' @param bulk.coef The fit model coefficients for the space of rank correlations
+#' @param degree The degree of the polynomial
+#' @param dims The total number of dimensions of the latent space
 #'
-#' @return
-#'
-#' @examples
+#' @return model from stats::lm
 MultiVarFit <- function(i, cell.prob.coef, bulk.coef, degree, dims){
 
   row.names(bulk.coef) <- paste0("x",1:dims)

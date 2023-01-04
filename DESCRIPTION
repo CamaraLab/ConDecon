@@ -7,7 +7,12 @@ Authors@R:
            role = c("aut", "cre"),
            email = "raubin@seas.upenn.edu",
            comment = c(ORCID = "https://orcid.org/0000-0002-9789-763X"))
-Description: What the package does (one paragraph).
+Description: ConDecon is a clustering-independent deconvolution method for 
+            estimating cell abundances in bulk tissues using single-cell RNA-seq 
+            data. The aim of ConDecon is to infer a probability distribution across 
+            a reference single-cell RNA-seq data that represents the likelihood 
+            for each cell in the reference data to be present in the query bulk 
+            tissue.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

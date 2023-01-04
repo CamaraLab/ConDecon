@@ -7,10 +7,14 @@
 GeneIndex(knn, count, variable.features)
 }
 \arguments{
-\item{variable.features}{}
+\item{knn}{Matrix of cells with their nearest neighbor}
+
+\item{count}{Matrix of single-cell count data}
+
+\item{variable.features}{Character vector of variable features from single-cell data}
 }
 \value{
-
+Matrix of rank indices for variable features ordered by expression
 }
 \description{
 GeneIndex

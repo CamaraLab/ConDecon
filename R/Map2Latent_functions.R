@@ -68,13 +68,11 @@ Map2Latent <- function(output,
 #' GeneIndex
 #' @import Matrix
 #' @importFrom tidyr gather
-#' @param knn
-#' @param count
-#' @param variable.features
+#' @param knn Matrix of cells with their nearest neighbor
+#' @param count Matrix of single-cell count data
+#' @param variable.features Character vector of variable features from single-cell data
 #'
-#' @return
-#'
-#' @examples
+#' @return Matrix of rank indices for variable features ordered by expression
 GeneIndex <- function(knn,count,variable.features){
 
   knn.index <- tidyr::gather(as.data.frame(t(knn)))
@@ -95,13 +93,10 @@ GeneIndex <- function(knn,count,variable.features){
 }
 
 #' GeneIndex_subfxn
+#' @param i Bulk sample
+#' @param geneID Vector with index of variable features
 #'
-#' @param i
-#' @param geneID
-#'
-#' @return
-#'
-#' @examples
+#' @return Numeric vector of gene rank
 GeneIndex_subfxn <- function(i,geneID){
   #For each cell, order the genes by rank expression (from high to low)
   i.order <- rank(-i)
@@ -109,14 +104,11 @@ GeneIndex_subfxn <- function(i,geneID){
 }
 
 #' CorBulk
+#' @param bulk Matrix of query bulk data (features x samples)
+#' @param genes Character vector of variable features from single-cell data
+#' @param gene.index Numeric vector of gene rank
 #'
-#' @param bulk
-#' @param genes
-#' @param gene.index
-#'
-#' @return
-#'
-#' @examples
+#' @return Matrix of rank correlation for each bulk sample
 CorBulk <- function(bulk, genes, gene.index){
   genes_id <- match(genes,row.names(bulk))
   #Finds the rank of the differentially expressed genes when each bulk sample is ordered decreasingly by expression

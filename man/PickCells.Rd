@@ -7,10 +7,22 @@
 PickCells(max.iter, step, cell.prob, max.cent, tot.cells, n, verbose)
 }
 \arguments{
-\item{verbose}{}
+\item{max.iter}{Size of the training data}
+
+\item{step}{Manual threading; number of calculations to do simultaneously}
+
+\item{cell.prob}{Cell probability distributions (matrix)}
+
+\item{max.cent}{Maximum number of Gaussian centers}
+
+\item{tot.cells}{Number of cells to select and aggregate for each simulated bulk sample}
+
+\item{n}{Total number of cells in the single-cell data}
+
+\item{verbose}{Whether to print (verbose = FALSE)}
 }
 \value{
-
+Matrix of with cells selected to be in each bulk sample
 }
 \description{
 Pick cells based on the Gaussian kernal

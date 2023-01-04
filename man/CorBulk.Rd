@@ -7,10 +7,14 @@
 CorBulk(bulk, genes, gene.index)
 }
 \arguments{
-\item{gene.index}{}
+\item{bulk}{Matrix of query bulk data (features x samples)}
+
+\item{genes}{Character vector of variable features from single-cell data}
+
+\item{gene.index}{Numeric vector of gene rank}
 }
 \value{
-
+Matrix of rank correlation for each bulk sample
 }
 \description{
 CorBulk

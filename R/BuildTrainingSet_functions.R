@@ -103,9 +103,6 @@ BuildTrainingSet <- function(count,
   } else if(error.sigma.max & error.sigma.min == FALSE){
     sigma_max = sigma_min*5
   }
-  # if(verbose == TRUE){
-  #   message("Sigma found")
-  # }
 
 
 
@@ -131,7 +128,6 @@ BuildTrainingSet <- function(count,
 
     # Choose mixture between [1:100]
     mixture <- sample(1:100,output$TrainingSet$parameters[i,1], replace=TRUE)
-    # mixture <- rep(100/output$TrainingSet$parameters[i,1], output$TrainingSet$parameters[i,1])
     output$TrainingSet$parameters[i,(2+max.cent*2):(1+max.cent*2+output$TrainingSet$parameters[i,1])] <- mixture/sum(mixture)
 
     # Choose which cells will be the centers
@@ -140,12 +136,11 @@ BuildTrainingSet <- function(count,
 
     # Cell Prob
     output$TrainingSet$cell.prob[,i] <- CellProb(parameters = output$TrainingSet$parameters[i,], latent_distance = output$TrainingSet$latent_distance,
-                                     max.cent = max.cent, tot.cells=tot.cells)
+                                     max.cent = max.cent)
   }
   gc(verbose = FALSE)
 
   pick.cells <- PickCells(max.iter, step, output$TrainingSet$cell.prob, max.cent, tot.cells, n, verbose)
-  #rm(cell.prob)
   gc(verbose = FALSE)
 
   #Aggregate single-cell expression weighted by GMM to create synthetic bulk
@@ -154,14 +149,11 @@ BuildTrainingSet <- function(count,
 }
 
 #' Find sigma
+#' @param sigma variable
+#' @param x_i range of sigma values
+#' @param width standard deviation of Gaussian
 #'
-#' @param sigma
-#' @param x_i
-#' @param width
-#'
-#' @return
-#'
-#' @examples
+#' @return Sigma value
 Find_Sigma <- function(sigma, x_i, width){
   sum((1/(sqrt(2*pi)*sigma))*exp(-(x_i)^2/(2*sigma^2)))*width-0.5
 }
@@ -169,15 +161,12 @@ Find_Sigma <- function(sigma, x_i, width){
 #' Calculate cell probability
 #' @description  Calculate the probability of each cell based on a Gaussian distribution
 #'
-#' @param parameters
-#' @param latent_distance
-#' @param max.cent
-#' @param tot.cells
+#' @param parameters Parameters for the Gaussian dist
+#' @param latent_distance Pairwise distance matrix for each cell in the latent space
+#' @param max.cent Maximum number of Gaussian centers
 #'
-#' @return
-#'
-#' @examples
-CellProb <- function(parameters,latent_distance,max.cent,tot.cells){
+#' @return Numeric vector with an assigned prob for each cell
+CellProb <- function(parameters,latent_distance,max.cent){
   # message("CellProb internal")
   num.cent <- parameters[1]
   g.mix.model <- t((parameters[(2+max.cent*2):(1+max.cent*2+num.cent)]/
@@ -188,18 +177,15 @@ CellProb <- function(parameters,latent_distance,max.cent,tot.cells){
 }
 
 #' Pick cells based on the Gaussian kernal
+#' @param max.iter Size of the training data
+#' @param step Manual threading; number of calculations to do simultaneously
+#' @param cell.prob Cell probability distributions (matrix)
+#' @param max.cent Maximum number of Gaussian centers
+#' @param tot.cells Number of cells to select and aggregate for each simulated bulk sample
+#' @param n Total number of cells in the single-cell data
+#' @param verbose Whether to print (verbose = FALSE)
 #'
-#' @param max.iter
-#' @param step
-#' @param cell.prob
-#' @param max.cent
-#' @param tot.cells
-#' @param n
-#' @param verbose
-#'
-#' @return
-#'
-#' @examples
+#' @return Matrix of with cells selected to be in each bulk sample
 PickCells <- function(max.iter,step,cell.prob,max.cent,tot.cells,n,verbose){
   # if(verbose == TRUE){
   #   message("PickCells")
@@ -226,16 +212,13 @@ PickCells <- function(max.iter,step,cell.prob,max.cent,tot.cells,n,verbose){
 }
 
 #' Sample cells
+#' @param i Indicator for the cell probability distribution
+#' @param cell.prob Cell probability distributions (matrix)
+#' @param max.cent Maxiumum number of centers
+#' @param tot.cells Number of cells to select and aggregate for each simulated bulk sample
+#' @param n Total number of cells in the single-cell data
 #'
-#' @param i
-#' @param cell.prob
-#' @param max.cent
-#' @param tot.cells
-#' @param n
-#'
-#' @return
-#'
-#' @examples
+#' @return Cells selected to be in each bulk sample
 BulkCells_subfxn <- function(i,cell.prob,max.cent,tot.cells,n){
   return(sample(1:tot.cells,n,replace = TRUE,prob = cell.prob[,i]))
 }
@@ -244,17 +227,16 @@ BulkCells_subfxn <- function(i,cell.prob,max.cent,tot.cells,n){
 #' @importFrom plyr count
 #' @import Matrix
 #' @importFrom tidyr gather
-#' @param pick.cells
-#' @param max.iter
-#' @param step
-#' @param max.cent
-#' @param tot.cells
-#' @param n
-#' @param count
+#' @param pick.cells Matrix of with cells selected to be in each bulk sample
+#' @param max.iter Size of the training data
+#' @param step Manual threading; number of calculations to do simultaneously
+#' @param max.cent Maximum number of Gaussian centers
+#' @param tot.cells Number of cells to select and aggregate for each simulated bulk sample
+#' @param n Total number of cells in the single-cell data
+#' @param count Matrix of single-cell count data
+#' @param verbose Whether to print (verbose = FALSE)
 #'
-#' @return
-#'
-#' @examples
+#' @return Matrix with simulated bulk data
 BulkCells <- function(pick.cells, max.iter, step, max.cent, tot.cells, n, count, verbose){
   # if(verbose == TRUE){
   #   message("Bulk Cells")

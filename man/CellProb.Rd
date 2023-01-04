@@ -4,13 +4,17 @@
 \alias{CellProb}
 \title{Calculate cell probability}
 \usage{
-CellProb(parameters, latent_distance, max.cent, tot.cells)
+CellProb(parameters, latent_distance, max.cent)
 }
 \arguments{
-\item{tot.cells}{}
+\item{parameters}{Parameters for the Gaussian dist}
+
+\item{latent_distance}{Pairwise distance matrix for each cell in the latent space}
+
+\item{max.cent}{Maximum number of Gaussian centers}
 }
 \value{
-
+Numeric vector with an assigned prob for each cell
 }
 \description{
 Calculate the probability of each cell based on a Gaussian distribution

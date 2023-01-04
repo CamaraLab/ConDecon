@@ -7,10 +7,14 @@
 Find_Sigma(sigma, x_i, width)
 }
 \arguments{
-\item{width}{}
+\item{sigma}{variable}
+
+\item{x_i}{range of sigma values}
+
+\item{width}{standard deviation of Gaussian}
 }
 \value{
-
+Sigma value
 }
 \description{
 Find sigma

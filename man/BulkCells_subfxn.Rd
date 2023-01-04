@@ -7,10 +7,18 @@
 BulkCells_subfxn(i, cell.prob, max.cent, tot.cells, n)
 }
 \arguments{
-\item{n}{}
+\item{i}{Indicator for the cell probability distribution}
+
+\item{cell.prob}{Cell probability distributions (matrix)}
+
+\item{max.cent}{Maxiumum number of centers}
+
+\item{tot.cells}{Number of cells to select and aggregate for each simulated bulk sample}
+
+\item{n}{Total number of cells in the single-cell data}
 }
 \value{
-
+Cells selected to be in each bulk sample
 }
 \description{
 Sample cells

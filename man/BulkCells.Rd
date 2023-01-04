@@ -7,10 +7,24 @@
 BulkCells(pick.cells, max.iter, step, max.cent, tot.cells, n, count, verbose)
 }
 \arguments{
-\item{count}{}
+\item{pick.cells}{Matrix of with cells selected to be in each bulk sample}
+
+\item{max.iter}{Size of the training data}
+
+\item{step}{Manual threading; number of calculations to do simultaneously}
+
+\item{max.cent}{Maximum number of Gaussian centers}
+
+\item{tot.cells}{Number of cells to select and aggregate for each simulated bulk sample}
+
+\item{n}{Total number of cells in the single-cell data}
+
+\item{count}{Matrix of single-cell count data}
+
+\item{verbose}{Whether to print (verbose = FALSE)}
 }
 \value{
-
+Matrix with simulated bulk data
 }
 \description{
 Aggregate cells in bulk data based on the Gaussian kernal
