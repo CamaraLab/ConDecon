@@ -1,0 +1,6 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^\.github$
+^codecov\.yml$
+^README\.html$
+^\.examples$
