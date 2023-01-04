@@ -27,4 +27,4 @@ Aubin, R. G., Montelongo, J., Hu, R., Camara, P. G. *Clustering-independent esti
 
 # Tutorials
 
-Tutorial for running ConDecon on simulated bulk and single-cell RNA-seq data: [Quick set up and example](/examples/Quick set up and example.md)
+Tutorial for running ConDecon on simulated bulk and single-cell RNA-seq data: [Quick set up and example](/examples/Quick%20set%20up%20and%20example.md)
