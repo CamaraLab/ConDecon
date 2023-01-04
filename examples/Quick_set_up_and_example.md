@@ -26,7 +26,7 @@ Plot the reference single-cell data colored by cluster IDs:
       geom_point(size = 0.5) + theme_classic()
 
 <p align="center">
-  <img src="Figures_md/Fig2_single_cell_clusters.png" width="75%"/>
+  <img src="Figures_md/Fig2_single_cell_clusters.png" width="60%"/>
 </p>
 
 ## Load example bulk data
@@ -52,4 +52,6 @@ Plot the predicted cell abundances for each of the 5 bulk samples:
 
     PlotConDecon(ConDecon = ConDecon_obj, umap = umap_embedding_gps)
 
-<img src="Figures_md/Fig4_bulk1.png" width="49%"/> <img src="Figures_md/Fig4_bulk2.png" width="49%"/> <img src="Figures_md/Fig4_bulk3.png" width="49%"/> <img src="Figures_md/Fig4_bulk4.png" width="49%"/> <img src="Figures_md/Fig4_bulk5.png" width="49%"/>
+<p align="center">
+  <img src="Figures_md/Fig4_bulk1.png" width="32%"/> <img src="Figures_md/Fig4_bulk2.png" width="32%"/> <img src="Figures_md/Fig4_bulk3.png" width="32%"/> <img src="Figures_md/Fig4_bulk4.png" width="32%"/> <img src="Figures_md/Fig4_bulk5.png" width="32%"/>
+</p>
