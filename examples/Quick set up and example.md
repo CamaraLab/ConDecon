@@ -25,7 +25,9 @@ Plot the reference single-cell data colored by cluster IDs:
     ggplot(data.frame(umap_embedding_gps), aes(x = UMAP_1, y = UMAP_2, color = cell_gps)) + 
       geom_point(size = 0.5) + theme_classic()
 
-![](Figures_md/Fig2_single_cell_clusters.png){width="75%"}
+<p align="center">
+  <img src="Figures_md/Fig2_single_cell_clusters.png" width="75%"/>
+</p>
 
 ## Load example bulk data
 
@@ -50,4 +52,4 @@ Plot the predicted cell abundances for each of the 5 bulk samples:
 
     PlotConDecon(ConDecon = ConDecon_obj, umap = umap_embedding_gps)
 
-![](Figures_md/Fig4_bulk1.png){width="49%"} ![](Figures_md/Fig4_bulk2.png){width="49%"} ![](Figures_md/Fig4_bulk3.png){width="49%"} ![](Figures_md/Fig4_bulk4.png){width="49%"} ![](Figures_md/Fig4_bulk5.png){width="49%"}
+<img src="Figures_md/Fig4_bulk1.png" width="49%"/> <img src="Figures_md/Fig4_bulk2.png" width="49%"/> <img src="Figures_md/Fig4_bulk3.png" width="49%"/> <img src="Figures_md/Fig4_bulk4.png" width="49%"/> <img src="Figures_md/Fig4_bulk5.png" width="49%"/>
