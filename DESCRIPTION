@@ -1,5 +1,5 @@
 Package: ConDecon
-Title: Continuous deconvolution of bulk data using single-cell data as a reference
+Title: Continuous Deconvolution of Bulk Data using Single-Cell Data as a Reference
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Rachael",
@@ -16,7 +16,7 @@ Description: ConDecon is a clustering-independent deconvolution method for
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 Depends:
     R (>= 2.10)
 Imports:
