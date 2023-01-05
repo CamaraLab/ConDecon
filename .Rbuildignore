@@ -3,4 +3,4 @@
 ^\.github$
 ^codecov\.yml$
 ^README\.html$
-^\.examples$
+^\examples$
