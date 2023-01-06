@@ -6,8 +6,8 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/CamaraLab/ConDecon/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/CamaraLab/ConDecon/actions/workflows/R-CMD-check.yaml)
-[![Codecov test coverage](https://codecov.io/gh/CamaraLab/ConDecon/branch/master/graph/badge.svg)](https://app.codecov.io/gh/CamaraLab/ConDecon?branch=master)
+[![R-CMD-check](https://github.com/CamaraLab/ConDecon/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/CamaraLab/ConDecon/actions/workflows/R-CMD-check.yaml) [![codecov](https://codecov.io/gh/CamaraLab/ConDecon/branch/master/graph/badge.svg?token=85C7L0949M)](https://codecov.io/gh/CamaraLab/ConDecon)
+
 <!-- badges: end -->
 
 # ConDecon
