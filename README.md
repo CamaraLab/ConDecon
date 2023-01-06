@@ -7,7 +7,7 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/CamaraLab/ConDecon/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/CamaraLab/ConDecon/actions/workflows/R-CMD-check.yaml)
-
+[![Codecov test coverage](https://codecov.io/gh/CamaraLab/ConDecon/branch/master/graph/badge.svg)](https://app.codecov.io/gh/CamaraLab/ConDecon?branch=master)
 <!-- badges: end -->
 
 # ConDecon
