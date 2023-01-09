@@ -23,9 +23,7 @@ With this information, ConDecon learns a relationship that explains the similari
 Aubin, R. G., Montelongo, J., Hu, R., Camara, P. G. *Clustering-independent estimation of cell abundances in bulk tissue using single-cell RNA-seq. data*. **In preperation** (2023).
 
 <p align="center">
-
-<img src="examples/Figures_md/Method_Overview.png" width="70%"/>
-
+  <img src="examples/Figures_md/Method_Overview.png" width="70%"/>
 </p>
 
 # Installation
