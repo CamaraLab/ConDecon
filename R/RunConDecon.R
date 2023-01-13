@@ -129,14 +129,19 @@ RunConDecon <- function(counts,
     return(NULL)
   }
 
-  #Variable features must be located in bulk and single-cell data
-  which_features <- unique(c(match(row.names(counts), variable.features), match(row.names(bulk),
-                                                                               variable.features)))
-  which_features <- which_features[!is.na(which_features)]
-  variable.features <- variable.features[which_features]
-  if(verbose == TRUE){
-    cat(paste0("There are ", length(variable.features), " variable.features in both the counts and bulk data\n"))
-  }
+  if(is.vector(variable.features)){
+    #Variable features must be located in bulk and single-cell data
+    which_features <- unique(c(match(row.names(counts), variable.features), match(row.names(bulk),
+                                                                                  variable.features)))
+    which_features <- which_features[!is.na(which_features)]
+    variable.features <- variable.features[which_features]
+    if(verbose == TRUE){
+      cat(paste0("There are ", length(variable.features), " variable.features in both the counts and bulk data\n"))
+    }
+  } else(
+    message("variable.features must be a vector of features")
+    return(NULL)
+  )
 
   output <- NULL
   output <- vector(mode="list", length=0)
