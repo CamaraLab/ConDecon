@@ -138,10 +138,10 @@ RunConDecon <- function(counts,
     if(verbose == TRUE){
       cat(paste0("There are ", length(variable.features), " variable.features in both the counts and bulk data\n"))
     }
-  } else(
+  } else{
     message("variable.features must be a vector of features")
     return(NULL)
-  )
+  }
 
   output <- NULL
   output <- vector(mode="list", length=0)
