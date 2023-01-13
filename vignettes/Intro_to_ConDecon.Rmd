@@ -1,8 +1,8 @@
 ---
-title: "Introduction to ConDecon"
+title: "Quick set up and example"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction to ConDecon}
+  %\VignetteIndexEntry{Quick set up and example}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,43 +14,65 @@ knitr::opts_chunk$set(
 )
 ```
 
-ConDecon is a clustering-independent method for estimating cell abundances in bulk tissues using single-cell RNA-seq data.
+ConDecon is a clustering-independent method for estimating cell abundances in bulk tissues using single-cell omics data as reference. In this tutorial, we will apply ConDecon to simulated transcriptomic data and visualize the expected results.
 
 ```{r setup}
 library(ConDecon)
+library(ggplot2)
 ```
 
-ConDecon requires 4 input files:
-
-1. Single-cell count matrix
-2. Latent space of the single-cell data
-3. Variable features associated with the single-cell data
-4. Bulk data
-
-The ConDecon package includes example files of these data.
+As a reference dataset, we will use simulated single-cell RNA-seq data containing 9 clusters/groups (gps). This data was generated using the software [*Splatter*](https://doi.org/10.1186/s13059-017-1305-0). We will start by loading the single-cell RNA-seq count and meta data provided by the ConDecon package.
 
 ```{r}
-# 1
-data("counts_gps")
-# 2
-data("latent_gps")
-# 3
-data("variable_genes_gps")
-# 4
+# Single-cell gene expression count data
+data(counts_gps)
+
+# Single-cell PCA latent space
+data(latent_gps)
+
+# Top 2,000 variable genes
+data(variable_genes_gps)
+
+# UMAP embedding of the single-cell data
+data(umap_embedding_gps)
+
+# cluster IDs for the single-cell data
+data(cell_gps)
+```
+
+```{r}
+# Visualize the cluster annotations of the single-cell RNA seq data
+ggplot(data.frame(umap_embedding_gps), aes(x = UMAP_1, y = UMAP_2, color = cell_gps)) + 
+      geom_point(size = 0.5) + theme_classic()
+```
+
+For this example, we will use ConDecon to deconvolve 5 simulated bulk transcriptomic profiles.
+
+```{r}
+# Bulk gene expression data, normalized by TPMs
 data("bulk_gps")
 ```
 
-Let's run ConDecon:
+‘RunConDecon’ is the main function necessary to infer cell abundances for each input bulk sample. This function requires 4 inputs:
+
+1. Single-cell count matrix
+2. Single-cell latent space matrix
+3. Character vector of variable features associated with the single-cell data
+4. Normalized bulk data matrix
+
+The output of this function is a ConDecon object containing a norm_cell.probs matrix with the predicted cell probability distributions.
 
 ```{r}
-condecon_object = RunConDecon(counts = counts_gps, latent = latent_gps, variable.features = variable_genes_gps, bulk = bulk_gps, dims = 10)
+condecon_object = RunConDecon(counts = counts_gps, 
+                              latent = latent_gps, 
+                              variable.features = variable_genes_gps, 
+                              bulk = bulk_gps, 
+                              dims = 10)
 ```
 
 Plot the predicted cell abundances for each of the 5 bulk samples:
 
 ```{r}
-## load a UMAP 2D embedding of the single-cell data
-data("umap_embedding_gps")
-
 PlotConDecon(ConDecon = condecon_object, umap = umap_embedding_gps)
 ```
+

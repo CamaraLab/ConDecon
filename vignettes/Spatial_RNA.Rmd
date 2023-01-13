@@ -1,8 +1,8 @@
 ---
-title: "Applying ConDecon to Spatial transcriptomic data"
+title: "Applying ConDecon to spatial transcriptomic data"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Applying ConDecon to Spatial transcriptomic data}
+  %\VignetteIndexEntry{Applying ConDecon to spatial transcriptomic data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -35,8 +35,10 @@ scRNA_meta_data <- readRDS("../scRNA_meta_data.Rds")
 
 ```{r, eval=FALSE}
 # Visualize the cell type annotations and predicted pseudotime of the single-cell RNA-seq data
-p1 <- ggplot(scRNA_meta_data, aes(UMAP1, UMAP2, color = clusters)) + geom_point(size = 0.75) + theme_classic()
-p2 <- ggplot(scRNA_meta_data, aes(UMAP1, UMAP2, color = dpt_pseudotime)) + geom_point(size = 0.75) + scale_color_viridis_c(option = "plasma") + theme_classic()
+p1 <- ggplot(scRNA_meta_data, aes(UMAP1, UMAP2, color = clusters)) + 
+  geom_point(size = 0.75) + theme_classic()
+p2 <- ggplot(scRNA_meta_data, aes(UMAP1, UMAP2, color = dpt_pseudotime)) + 
+  geom_point(size = 0.75) + scale_color_viridis_c(option = "plasma") + theme_classic()
 grid.arrange(p1, p2, ncol=2)
 ```
 ```{r, echo=FALSE, out.width="500px"}
@@ -44,16 +46,17 @@ knitr::include_graphics("Spatial_scRNA.png")
 ```
 
 
-We are interested in using ConDecon to deconvolve each pixel of the tissue section profiled by stereo-seq. To reduce the the computational time necessary to run this tutorial, we have included the stereo-seq data associated with a one tissue section.
+We are interested in using ConDecon to deconvolve each pixel of the tissue section profiled by stereo-seq. To reduce the the computational time necessary to run this tutorial, we have included the stereo-seq data associated with a one tissue section on Zenodo.
 
 ```{r, eval=FALSE}
-stereoseq_slice1_RNA_data <- readRDS("~/e/Projects/PGC015_Deconvolution/Analysis/PGC0015.a2/Spatial/Data/RData/stereoseq_slice1_RNA_data.Rds")
-stereoseq_meta_data <- readRDS("~/e/Projects/PGC015_Deconvolution/Analysis/PGC0015.a2/Spatial/Data/RData/stereoseq_meta_data.Rds")
+stereoseq_slice1_RNA_data <- readRDS("../stereoseq_slice1_RNA_data.Rds")
+stereoseq_meta_data <- readRDS("../stereoseq_meta_data.Rds")
 ```
 
 ```{r, eval=FALSE}
 # Visualize the cell type annotations of the stereo-seq data from 1 tissue section
-ggplot(stereoseq_meta_data, aes(spatial_x, spatial_y, color = bin_annotation)) + geom_point() + theme_linedraw()
+ggplot(stereoseq_meta_data, aes(spatial_x, spatial_y, color = bin_annotation)) + 
+  geom_point() + theme_linedraw()
 ```
 ```{r, echo=FALSE, out.width="500px"}
 knitr::include_graphics("Spatial_slice1_celltypes.png")
@@ -64,7 +67,11 @@ We can now use ConDecon to deconvolve this spot-based spatial transcriptomic dat
 ```{r, eval=FALSE}
 startTime <- Sys.time()
 
-ConDecon_obj <- RunConDecon(counts = scRNA_count, latent = scRNA_PCA, variable.features = scRNA_var_genes, bulk = stereoseq_slice1_RNA_data, max.cent = 1)
+ConDecon_obj <- RunConDecon(counts = scRNA_count, 
+                            latent = scRNA_PCA, 
+                            variable.features = scRNA_var_genes, 
+                            bulk = stereoseq_slice1_RNA_data, 
+                            max.cent = 1)
 
 endTime <- Sys.time()
 print(endTime - startTime)
@@ -73,7 +80,8 @@ print(endTime - startTime)
 
 ```{r, eval=FALSE}
 # Let's visualize the cell abundance distribution of 3 example spots
-ConDecon_obj = PlotConDecon(ConDecon_obj, umap = scRNA_meta_data[, c("UMAP1", "UMAP2")], samples = c("DNB_3795_15810", "DNB_3945_15525", "DNB_4080_15600"))
+ConDecon_obj = PlotConDecon(ConDecon_obj, umap = scRNA_meta_data[, c("UMAP1", "UMAP2")], 
+                            samples = c("DNB_3795_15810", "DNB_3945_15525", "DNB_4080_15600"))
 ```
 ```{r, echo=FALSE, out.width="500px"}
 knitr::include_graphics("Spatial_CellProb_3examples_smaller.png")
@@ -81,19 +89,10 @@ knitr::include_graphics("Spatial_CellProb_3examples_smaller.png")
 
 ```{r, eval=FALSE}
 # Identify the location of these spots on the tissue section
-ggplot(stereoseq_meta_data, aes(spatial_x, spatial_y, color = three_examples)) + geom_point() + theme_linedraw()
+ggplot(stereoseq_meta_data, aes(spatial_x, spatial_y, color = three_examples)) + 
+  geom_point() + theme_linedraw()
 ```
 ```{r, echo=FALSE, out.width="500px"}
 knitr::include_graphics("Spatial_slice1_3examples.png")
 ```
-
-
-
-
-
-
-
-
-
-
 
