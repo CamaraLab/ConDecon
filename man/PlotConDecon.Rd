@@ -19,13 +19,13 @@ PlotConDecon(
 
 \item{umap}{2-dimensional coordinates of reference single-cell data (default = first 2 dimensions of latent space)}
 
-\item{samples}{character vector of the name(s) of the query bulk sample(s) to plot; relative probability will still be calculated between all sample(s) (default = NULL)}
+\item{samples}{character vector of the name(s) of the query bulk sample(s) to plot (default = NULL). Note: the relative probability will still be calculated between all sample(s).}
 
 \item{pt.size}{size of the points plotted (default = 1)}
 
 \item{rm_outliers}{Boolean indicating whether to remove outlier cell probability values from the z-score calculation based on +- 1.5*IQR (default = FALSE)}
 
-\item{cells}{vector of cell names/index indicating which cells from the reference single-cell data to plot (default = NULL, plot all cells)}
+\item{cells}{vector of cell names/indices indicating which cells from the reference single-cell data to plot (default = NULL, plot all cells)}
 
 \item{title_names}{title of the plot (default = NULL, use bulk sample names from ConDecon object)}
 }
@@ -42,12 +42,11 @@ data(latent_gps)
 data(bulk_gps)
 data(variable_genes_gps)
 
+# For this example, we will reduce the training size to max.iter = 100 to reduce run time
 ConDecon_obj = RunConDecon(counts = counts_gps, latent = latent_gps, bulk = bulk_gps,
-variable.features = variable_genes_gps)
+variable.features = variable_genes_gps, max.iter = 100)
 
-# add z-score cell abundances to ConDecon object: ConDecon$relative_cell.prob
+# add z-score cell abundances to ConDecon object: ConDecon_obj$relative_cell.prob
+# Samples will plot automatically
 ConDecon_obj = PlotConDecon(ConDecon_obj)
-
-# Plot the z-score cell abundances for the query bulk sample(s)
-PlotConDecon(ConDecon_obj)
 }
