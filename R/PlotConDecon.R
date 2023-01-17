@@ -83,7 +83,7 @@ PlotConDecon <- function(ConDecon_obj,
     subtract_avg <- (norm_cell.prob[,i]- avg_prob)/sd_prob
     ConDecon_obj$relative_cell.prob <- cbind(ConDecon_obj$relative_cell.prob, subtract_avg)
 
-    UMAP_1 <- UMAP_2 <- NULL # Setting the variables to NULL to appease R-CMD-check
+    Dim_1 <- Dim_2 <- NULL # Setting the variables to NULL to appease R-CMD-check
     #https://stackoverflow.com/questions/9439256/how-can-i-handle-r-cmd-check-no-visible-binding-for-global-variable-notes-when
     ##scale_color_gradient2(low = "blue", high = "red", mid = "gray")
     graphics::plot(ggplot(umap, aes(x=Dim_1, y=Dim_2, color = subtract_avg)) +
