@@ -25,13 +25,14 @@
 #' data(counts_gps)
 #' data(latent_gps)
 #'
-#' TrainingSet = BuildTrainingSet(count = counts_gps, latent = latent_gps)
+#' # For this example, we will reduce the training size to max.iter = 50 to reduce run time
+#' TrainingSet = BuildTrainingSet(count = counts_gps, latent = latent_gps, max.iter = 50)
 BuildTrainingSet <- function(count,
                              latent,
-                             max.iter = 10000,
+                             max.iter = 5000,
                              max.cent = 5,
-                             step = 10000,
-                             dims = ncol(latent),
+                             step = ifelse(max.iter <= 10000, max.iter, 10000),
+                             dims = 10,
                              min.cent = 1,
                              n = round(ncol(count)/2),
                              sigma_min_cells = NULL,

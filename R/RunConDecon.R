@@ -30,9 +30,9 @@
 #' data(bulk_gps)
 #' data(variable_genes_gps)
 #'
-#' # For this example, we will reduce the training size to max.iter = 100 to reduce run time
+#' # For this example, we will reduce the training size to max.iter = 50 to reduce run time
 #' ConDecon_obj = RunConDecon(counts = counts_gps, latent = latent_gps,
-#' bulk = bulk_gps, variable.features = variable_genes_gps, max.iter = 100)
+#' bulk = bulk_gps, variable.features = variable_genes_gps, max.iter = 50)
 RunConDecon <- function(counts,
                       latent,
                       bulk,

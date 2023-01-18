@@ -31,7 +31,8 @@ data(latent_gps)
 data(bulk_gps)
 data(variable_genes_gps)
 
-TrainingSet = BuildTrainingSet(count = counts_gps, latent = latent_gps)
+# For this example, we will reduce the training size to max.iter = 50 to reduce run time
+TrainingSet = BuildTrainingSet(count = counts_gps, latent = latent_gps, max.iter = 50)
 
 ConDecon_obj = Map2Latent(output = TrainingSet, latent = latent_gps, count = counts_gps,
 bulk = bulk_gps, variable.features = variable_genes_gps)
