@@ -9,9 +9,8 @@ PlotConDecon(
   umap = ConDecon_obj$TrainingSet$latent[, 1:2],
   samples = NULL,
   pt.size = 1,
-  rm_outliers = FALSE,
   cells = NULL,
-  title_names = NULL
+  title_names = samples
 )
 }
 \arguments{
@@ -19,22 +18,19 @@ PlotConDecon(
 
 \item{umap}{2-dimensional coordinates of reference single-cell data (default = first 2 dimensions of latent space)}
 
-\item{samples}{character vector of the name(s) of the query bulk sample(s) to plot (default = NULL). Note: the relative probability will still be calculated between all sample(s).}
+\item{samples}{Vector of query bulk sample(s) to plot (default = NULL, plot all samples)}
 
 \item{pt.size}{size of the points plotted (default = 1)}
 
-\item{rm_outliers}{Boolean indicating whether to remove outlier cell probability values from the z-score calculation based on +- 1.5*IQR (default = FALSE)}
+\item{cells}{Vector of cells from the reference single-cell data to plot (default = NULL, plot all cells)}
 
-\item{cells}{vector of cell names/indices indicating which cells from the reference single-cell data to plot (default = NULL, plot all cells)}
-
-\item{title_names}{title of the plot (default = NULL, use bulk sample names from ConDecon object)}
+\item{title_names}{Title of each plot (default = samples, use NULL for no title)}
 }
 \value{
 Plot the z-score cell probability values for each query bulk sample
 }
 \description{
-Calculate and plot the cell probability z-score for each cell and bulk sample. Cell probability z-score associated with query sample_i:
-z-score_i = [ConDecon_obj$norm_cell.prob[,i] - rowMeans(ConDecon_obj$norm_cell.prob)] / RowSds(ConDecon_obj$norm_cell.prob)
+Plot ConDecon's predicted relative cell probability z-scores for each sample
 }
 \examples{
 data(counts_gps)
@@ -42,11 +38,10 @@ data(latent_gps)
 data(bulk_gps)
 data(variable_genes_gps)
 
-# For this example, we will reduce the training size to max.iter = 100 to reduce run time
+# For this example, we will reduce the training size to max.iter = 50 to reduce run time
 ConDecon_obj = RunConDecon(counts = counts_gps, latent = latent_gps, bulk = bulk_gps,
-variable.features = variable_genes_gps, max.iter = 100)
+variable.features = variable_genes_gps, max.iter = 50)
 
-# add z-score cell abundances to ConDecon object: ConDecon_obj$relative_cell.prob
-# Samples will plot automatically
-ConDecon_obj = PlotConDecon(ConDecon_obj)
+# Plot ConDecon relative cell prob
+PlotConDecon(ConDecon_obj)
 }
