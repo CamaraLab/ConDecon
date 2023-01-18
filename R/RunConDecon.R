@@ -182,6 +182,11 @@ RunConDecon <- function(counts,
   }
   output <- PredictCellProb(bulk, counts, variable.features, output)
 
+  #Calc Relative cell probability
+  output <- CalcRelativeCellProb(output)
+
+  #Order list of lists in ConDecon object
+  output <- output[c("Normalized_cell.prob", "Relative_cell.prob", "PredictCellProb", "Model", "TrainingSet")]
   class(output) = "ConDecon"
   return(output)
 }
