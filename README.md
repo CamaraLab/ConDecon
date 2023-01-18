@@ -23,14 +23,15 @@ With this information, ConDecon learns a relationship that explains the similari
 Aubin, R. G., Montelongo, J., Hu, R., Camara, P. G. *Clustering-independent estimation of cell abundances in bulk tissue using single-cell RNA-seq. data*. **In preperation** (2023).
 
 <p align="center">
-  <img src="examples/Figures_md/Method_Overview.png" width="70%"/>
+  <img src="man/figures/Method_Overview.png" width="70%"/>
 </p>
 
-# Installation
+## Installation
 
     devtools::install_github("CamaraLab/ConDecon")
     library(ConDecon)
 
-# Tutorials
+## Tutorials
 
-Tutorial for running ConDecon on simulated bulk and single-cell RNA-seq data: [Quick set up and example](/examples/Quick_set_up_and_example.md)
+Tutorial for applying ConDecon to simulated bulk and single-cell RNA-seq data: [Quick set up and example](/vignettes/Intro_to_ConDecon.Rmd)
+Tutorial for applying ConDecon spatial transcriptomic data: [Quick set up and example](/vignettes/Intro_to_ConDecon.Rmd)
