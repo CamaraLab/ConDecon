@@ -2,7 +2,7 @@
 #' @description Use the latent space to expand the distributions
 #' of cell abundances and correlations on a basis of functions
 #' @importFrom stats lm cor
-#' @param output Training set object
+#' @param TrainingSet Training set data (output from BuildTrainingSet)
 #' @param latent matrix of single-cell latent space (cells x dims)
 #' @param count single-cell count matrix (features x cells)
 #' @param bulk matrix of query bulk data (features x samples)
@@ -21,9 +21,9 @@
 #' # For this example, we will reduce the training size to max.iter = 50 to reduce run time
 #' TrainingSet = BuildTrainingSet(count = counts_gps, latent = latent_gps, max.iter = 50)
 #'
-#' ConDecon_obj = Map2Latent(output = TrainingSet, latent = latent_gps, count = counts_gps,
+#' ConDecon_obj = Map2Latent(TrainingSet = TrainingSet, latent = latent_gps, count = counts_gps,
 #' bulk = bulk_gps, variable.features = variable_genes_gps)
-Map2Latent <- function(output,
+Map2Latent <- function(TrainingSet,
                        latent,
                        count,
                        bulk,
@@ -36,20 +36,21 @@ Map2Latent <- function(output,
   bulk <- bulk[bulk_genes[!is.na(bulk_genes)],,drop=F]
   bulk <- bulk[row.names(count),,drop=F]
 
-  which_features <- unique(c(match(row.names(count), variable.features), match(row.names(bulk),
-                                                                               variable.features)))
+  which_features <- unique(c(match(row.names(count), variable.features),
+                             match(row.names(bulk), variable.features)))
   which_features <- which_features[!is.na(which_features)]
   variable.features <- variable.features[which_features]
 
 
-  output$TrainingSet$latent <- as.matrix(latent[,1:output$TrainingSet$dims])
+  TrainingSet$TrainingSet$latent <- as.matrix(latent[,1:TrainingSet$TrainingSet$dims])
 
   #Coefficients for cell prob (no intercept)
-  output$TrainingSet$cell.prob_coefficients <- stats::lm(output$TrainingSet$cell.prob ~ output$TrainingSet$latent + 0)$coefficients
+  TrainingSet$TrainingSet$cell.prob_coefficients <-
+    stats::lm(TrainingSet$TrainingSet$cell.prob ~ TrainingSet$TrainingSet$latent + 0)$coefficients
 
   #Find index of KNN for dist matrix
   k <- 5
-  knn <- t(apply(output$TrainingSet$latent_distance, 1, function(i){
+  knn <- t(apply(TrainingSet$TrainingSet$latent_distance, 1, function(i){
     order(i, decreasing = F)[1:k]
   }))
 
@@ -58,12 +59,14 @@ Map2Latent <- function(output,
   gene.index <- GeneIndex(knn, count, variable.features)
 
   #Correlation btwn synthetic bulk and single-cell data
-  output$TrainingSet$bulk_nn <- CorBulk(output$TrainingSet$synthetic_bulk, variable.features, gene.index)
+  TrainingSet$TrainingSet$bulk_nn <-
+    CorBulk(TrainingSet$TrainingSet$synthetic_bulk, variable.features, gene.index)
 
   #Coefficients for synthetic bulk
-  output$TrainingSet$bulk_coefficients <- stats::lm(output$TrainingSet$bulk_nn ~ output$TrainingSet$latent + 0)$coefficients
+  TrainingSet$TrainingSet$bulk_coefficients <-
+    stats::lm(TrainingSet$TrainingSet$bulk_nn ~ TrainingSet$TrainingSet$latent + 0)$coefficients
 
-  return(output)
+  return(TrainingSet)
 }
 
 #' GeneIndex

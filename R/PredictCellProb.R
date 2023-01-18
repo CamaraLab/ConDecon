@@ -17,7 +17,7 @@
 #'
 #' # For this example, we will reduce the training size to max.iter = 50 to reduce run time
 #' TrainingSet = BuildTrainingSet(count = counts_gps, latent = latent_gps, max.iter = 50)
-#' ConDecon_obj = Map2Latent(output = TrainingSet, latent = latent_gps, count = counts_gps,
+#' ConDecon_obj = Map2Latent(TrainingSet = TrainingSet, latent = latent_gps, count = counts_gps,
 #' bulk = bulk_gps, variable.features = variable_genes_gps)
 #' ConDecon_obj = BuildModel(ConDecon_obj)
 #'
@@ -58,23 +58,23 @@ PredictCellProb <- function(bulk,
   }
 
   row.names(bulk.coef) <- paste0("x",1:ncol(output$TrainingSet$latent))
-  output$bulk_coefficients <- data.frame(t(bulk.coef))
+  output$PredictCellProb$bulk_coefficients <- data.frame(t(bulk.coef))
 
   #Infer cell prob coefficients
-  output$cell.prob_coefficients <- NULL
+  output$PredictCellProb$cell.prob_coefficients <- NULL
   for (j in 1:length(output$Model)){
-    tmp <- stats::predict(output$Model[[j]], output$bulk_coefficients)
-    output$cell.prob_coefficients <- rbind(output$cell.prob_coefficients, tmp)
+    tmp <- stats::predict(output$Model[[j]], output$PredictCellProb$bulk_coefficients)
+    output$PredictCellProb$cell.prob_coefficients <- rbind(output$PredictCellProb$cell.prob_coefficients, tmp)
   }
 
   #Infer cell prob
-  output$infer_cell.prob <- NULL
-  output$infer_cell.prob = output$TrainingSet$latent %*% output$cell.prob_coefficients
+  output$PredictCellProb$infer_cell.prob <- NULL
+  output$PredictCellProb$infer_cell.prob = output$TrainingSet$latent %*% output$PredictCellProb$cell.prob_coefficients
 
   #normalize cell prob st cell prob sum to 1
-  colmin <- apply(output$infer_cell.prob, 2, min)
-  cellprob_scale <- t(t(output$infer_cell.prob)+abs(colmin))
-  output$norm_cell.prob = t(t(cellprob_scale)/colSums(cellprob_scale))
+  colmin <- apply(output$PredictCellProb$infer_cell.prob, 2, min)
+  cellprob_scale <- t(t(output$PredictCellProb$infer_cell.prob)+abs(colmin))
+  output$Normalized_cell.prob = t(t(cellprob_scale)/colSums(cellprob_scale))
 
   return(output)
 }
