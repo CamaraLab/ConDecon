@@ -1,0 +1,102 @@
+#' TransferFeatures
+#' @description Using ConDecon's predicted cell probability distribution, transfer a numeric feature from the single-cell data to the bulk data
+#' @importFrom Matrix colSums
+#' @param ConDecon_obj ConDecon object (output from RunConDecon)
+#' @param feature Numeric vector with support on the single-cell latent space (eg pseudotime, gene expression, etc)
+#' @param feature_name String indicating the name where the transferred feature will be stored within the ConDecon object (default = the object name input into feature)
+#' @param probs Numeric value indicating the bottom quartile of the distribution that should be removed for the purpose of smoothing long tails of the predicted cell probability distribuiton (default = 0.75)
+#'
+#' @return ConDecon object with a matrix called 'TransferFeatures' containing the transferred feature (rows) for each bulk sample (column)
+#' @export
+#'
+#' @examples
+#' data(counts_gps)
+#' data(latent_gps)
+#' data(bulk_gps)
+#' data(variable_genes_gps)
+#'
+#' # For this example, we will reduce the training size to max.iter = 50 to reduce run time
+#' ConDecon_obj = RunConDecon(counts = counts_gps, latent = latent_gps, bulk = bulk_gps,
+#' variable.features = variable_genes_gps, max.iter = 50)
+#'
+#' # add transferred feature to ConDecon object: ConDecon_obj$TransferFeatures[feature_name,]
+#' # Transfer the expression of a randomly selected gene from the count matrix
+#' ConDecon_obj = TransferFeatures(ConDecon_obj = ConDecon_obj, feature = counts_gps[sample(x = 1:nrow(counts_gps), size = 1),])
+TransferFeatures <- function(ConDecon_obj,
+                             feature,
+                             feature_name = deparse(substitute(feature)),
+                             probs = 0.75){
+
+  cat(paste0("Transferring ", feature_name, "... "))
+  if(class(ConDecon_obj) != "ConDecon"){
+    message("ConDecon_obj must be an object with class 'ConDecon' produced by the RunConDecon function")
+    return(NULL)
+  }
+  if(!is.vector(feature)){
+    message("feature must be a numeric vector")
+    return(NULL)
+  }
+  if(length(feature) != nrow(ConDecon_obj$norm_cell.prob)){
+    message("The length of 'feature' must be equal to the number of cells in the\n
+            reference single-cell data")
+    return(NULL)
+  }
+  if(is.null(names(feature))){
+    names(feature) <- rownames(ConDecon_obj$norm_cell.prob)
+  } else if(sum(names(feature) %in% row.names(ConDecon_obj$norm_cell.prob)) != nrow(ConDecon_obj$norm_cell.prob)){
+    message("Names of 'feature' must be the column/cell names in the reference single-cell data")
+    return(NULL)
+  } else {
+    feature = feature[row.names(ConDecon_obj$norm_cell.prob)]
+  }
+  if(is.null(ConDecon_obj$TransferFeatures)){
+    ConDecon_obj$TransferFeatures <- NULL
+  }
+
+  ## Remove long tails (bottom quartile of distribution) from predicted cell probability distributions
+  cell_prob_smooth = smooth_cell_prob(ConDecon_obj$norm_cell.prob, probs = probs)
+  ## Dot product between smoothed cell probability distribution and numeric feature
+  transfer_feature = feature %*% cell_prob_smooth
+  ## Normalize
+  transfer_feature = transfer_feature/Matrix::colSums(cell_prob_smooth)
+  row.names(transfer_feature) <- feature_name
+
+  if(feature_name %in% row.names(ConDecon_obj$TransferFeatures)){
+    ConDecon_obj$TransferFeatures[feature_name,] <- transfer_feature
+  } else{
+    ConDecon_obj$TransferFeatures <- rbind(ConDecon_obj$TransferFeatures, transfer_feature)
+  }
+
+  return(ConDecon_obj)
+}
+
+#' Set values to zero
+#' @param v Vector of predicted cell probability values for a single sample
+#' @param threshold Numeric of the distribution that represents the determined quartile value
+#'
+#' @return Vector of cell probability values truncated based on threshold
+set_zero <- function(v, threshold){
+  v[v<threshold] <- 0
+  return(v)
+}
+
+#' Smooth ConDecon's cell.prob matrix
+#' @importFrom stats quantile
+#' @param cell_prob Matrix of ConDecon's predicted cell probability distributions
+#' @param probs Numeric value indicating the bottom quartile of the distribution that should be removed for the purpose of smoothing long tails of the predicted cell probability distribuiton (default = 0.75)
+#'
+#' @return Matrix with truncated cell probability values based on quartile value
+smooth_cell_prob = function(cell_prob, probs = 0.75){
+
+  threshold_samples = apply(cell_prob, 2, function(i){
+    stats::quantile(i, probs = probs)
+  })
+
+  cell_prob_smooth <- NULL
+  for(i in 1:ncol(cell_prob)){
+    cell_prob_smooth <- cbind(cell_prob_smooth, set_zero(cell_prob[,i], threshold_samples[i]))
+  }
+  colnames(cell_prob_smooth) <- colnames(cell_prob)
+  return(cell_prob_smooth)
+}
+
