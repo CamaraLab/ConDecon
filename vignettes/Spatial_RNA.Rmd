@@ -81,7 +81,7 @@ ConDecon_obj = PlotConDecon(ConDecon_obj,
                             umap = scRNA_meta_data[, c("UMAP1", "UMAP2")], 
                             samples = c("DNB_3795_15810", "DNB_3945_15525", "DNB_4080_15600"))
 ```
-```{r, echo=FALSE, out.width="500px"}
+```{r, echo=FALSE, out.width="800px"}
 knitr::include_graphics("Spatial_CellProb_3examples_smaller.png")
 ```
 
@@ -90,7 +90,7 @@ knitr::include_graphics("Spatial_CellProb_3examples_smaller.png")
 ggplot(stereoseq_meta_data, aes(spatial_x, spatial_y, color = three_examples)) + 
   geom_point() + theme_linedraw()
 ```
-```{r, echo=FALSE, out.width="500px"}
+```{r, echo=FALSE, out.width="800px"}
 knitr::include_graphics("Spatial_slice1_3examples.png")
 ```
 
@@ -102,7 +102,7 @@ ConDecon_obj = TransferFeatures(ConDecon_obj = ConDecon_obj,
 ```{r, eval=FALSE}
 ggplot(stereoseq_meta_data, aes(spatial_x, spatial_y, color = ConDecon_obj$TransferFeatures[1,])) + geom_point() + scale_color_viridis_c(option = "plasma") + theme_linedraw()
 ```
-```{r, echo=FALSE, out.width="500px"}
+```{r, echo=FALSE, out.width="800px"}
 knitr::include_graphics("Spatial_slice1_TransferFeature.png")
 ```
 
@@ -115,7 +115,7 @@ ggplot(meta_data, aes(x=celltype, y=transfer_pstime, color = celltype)) +
   geom_boxplot(width=0.3) + 
   theme_classic()
 ```
-```{r, echo=FALSE, out.width="500px"}
+```{r, echo=FALSE, out.width="800px"}
 knitr::include_graphics("Spatial_slice1_boxplot.png")
 ```
 
