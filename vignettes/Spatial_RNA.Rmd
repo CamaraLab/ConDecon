@@ -32,7 +32,8 @@ scRNA_meta_data <- readRDS("../scRNA_meta_data.Rds")
 ```
 
 ```{r, eval=FALSE}
-# Visualize the cell type annotations and predicted pseudotime of the single-cell RNA-seq data
+# Visualize the cell type annotations and predicted pseudotime 
+# of the single-cell RNA-seq data
 p1 <- ggplot(scRNA_meta_data, aes(UMAP1, UMAP2, color = clusters)) + 
   geom_point(size = 0.75) + theme_classic()
 p2 <- ggplot(scRNA_meta_data, aes(UMAP1, UMAP2, color = dpt_pseudotime)) + 
@@ -53,9 +54,10 @@ stereoseq_meta_data <- readRDS("../stereoseq_meta_data.Rds")
 ```{r, eval=FALSE}
 # Visualize the cell type annotations of the stereo-seq data from 1 tissue section
 ggplot(stereoseq_meta_data, aes(spatial_x, spatial_y, color = bin_annotation)) + 
-  geom_point() + theme_linedraw()
+  geom_point() + 
+  theme_linedraw()
 ```
-```{r, echo=FALSE, out.width="800px"}
+```{r, echo=FALSE, out.width="600px"}
 knitr::include_graphics("Spatial_slice1_celltypes.png")
 ```
 
@@ -88,9 +90,10 @@ knitr::include_graphics("Spatial_CellProb_3examples_smaller.png")
 ```{r, eval=FALSE}
 # Identify the location of these spots on the tissue section
 ggplot(stereoseq_meta_data, aes(spatial_x, spatial_y, color = three_examples)) + 
-  geom_point() + theme_linedraw()
+  geom_point() + 
+  theme_linedraw()
 ```
-```{r, echo=FALSE, out.width="800px"}
+```{r, echo=FALSE, out.width="600px"}
 knitr::include_graphics("Spatial_slice1_3examples.png")
 ```
 
@@ -100,9 +103,12 @@ ConDecon_obj = TransferFeatures(ConDecon_obj = ConDecon_obj,
 ```
 
 ```{r, eval=FALSE}
-ggplot(stereoseq_meta_data, aes(spatial_x, spatial_y, color = ConDecon_obj$TransferFeatures[1,])) + geom_point() + scale_color_viridis_c(option = "plasma") + theme_linedraw()
+ggplot(stereoseq_meta_data, aes(spatial_x, spatial_y, color = ConDecon_obj$TransferFeatures[1,])) + 
+  geom_point() + 
+  scale_color_viridis_c(option = "plasma") + 
+  theme_linedraw()
 ```
-```{r, echo=FALSE, out.width="800px"}
+```{r, echo=FALSE, out.width="600px"}
 knitr::include_graphics("Spatial_slice1_TransferFeature.png")
 ```
 
@@ -115,7 +121,7 @@ ggplot(meta_data, aes(x=celltype, y=transfer_pstime, color = celltype)) +
   geom_boxplot(width=0.3) + 
   theme_classic()
 ```
-```{r, echo=FALSE, out.width="800px"}
+```{r, echo=FALSE, out.width="600px"}
 knitr::include_graphics("Spatial_slice1_boxplot.png")
 ```
 
