@@ -119,6 +119,8 @@ PlotConDecon <- function(ConDecon_obj,
                      ggplot2::labs(color = "Cell Prob\nz-score", title = ifelse(is.null(title_names), "", title_names[as.character(i)])) +
                      ggplot2::theme_classic())
   }
+
+  invisible(ConDecon_obj)
 }
 
 
