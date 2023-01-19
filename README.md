@@ -33,5 +33,5 @@ Aubin, R. G., Montelongo, J., Hu, R., Camara, P. G. *Clustering-independent esti
 
 ## Tutorials
 
-Tutorial for applying ConDecon to simulated bulk and single-cell RNA-seq data: [Quick set up and example](/vignettes/Intro_to_ConDecon.Rmd)
-Tutorial for applying ConDecon spatial transcriptomic data: [Quick set up and example](/vignettes/Intro_to_ConDecon.Rmd)
+Tutorial for applying ConDecon to simulated bulk and single-cell RNA-seq data: [Quick set up and example](https://camaralab.github.io/ConDecon/articles/Intro_to_ConDecon.html)
+Tutorial for applying ConDecon spatial transcriptomic data: [Spatial example](https://camaralab.github.io/ConDecon/articles/Spatial_RNA.html)
