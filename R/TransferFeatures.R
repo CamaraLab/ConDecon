@@ -1,5 +1,5 @@
 #' TransferFeatures
-#' @description Using ConDecon's predicted cell probability distribution, transfer a numeric feature from the single-cell data to the bulk data
+#' @description Using ConDecon's predicted cell probability distributions, transfer a numeric feature from the single-cell data to the bulk data
 #' @importFrom Matrix colSums
 #' @param ConDecon_obj ConDecon object (output from RunConDecon)
 #' @param feature Numeric vector with support on the single-cell latent space (eg pseudotime, gene expression, etc)
@@ -19,42 +19,45 @@
 #' ConDecon_obj = RunConDecon(counts = counts_gps, latent = latent_gps, bulk = bulk_gps,
 #' variable.features = variable_genes_gps, max.iter = 50)
 #'
-#' # add transferred feature to ConDecon object: ConDecon_obj$TransferFeatures[feature_name,]
-#' # Transfer the expression of a randomly selected gene from the count matrix
-#' ConDecon_obj = TransferFeatures(ConDecon_obj = ConDecon_obj, feature = counts_gps[sample(x = 1:nrow(counts_gps), size = 1),])
+#' # Transfer feature to ConDecon object: ConDecon_obj$TransferFeatures[feature_name,]
+#' # For this example, randomly selected gene from the count matrix to transfer
+#' random_gene = counts_gps[sample(x = 1:nrow(counts_gps), size = 1),]
+#' ConDecon_obj = TransferFeatures(ConDecon_obj = ConDecon_obj, feature = random_gene)
 TransferFeatures <- function(ConDecon_obj,
                              feature,
                              feature_name = deparse(substitute(feature)),
                              probs = 0.75){
 
-  cat(paste0("Transferring ", feature_name, "... "))
-  if(class(ConDecon_obj) != "ConDecon"){
-    message("ConDecon_obj must be an object with class 'ConDecon' produced by the RunConDecon function")
+  #Use invisible() to capture user's name for feature
+  invisible(paste0("Transferring ", feature_name, "... \n"))
+  if(!inherits(ConDecon_obj, what = "ConDecon")){
+    message("ConDecon_obj must be an object with class 'ConDecon' output from RunConDecon")
     return(NULL)
   }
   if(!is.vector(feature)){
     message("feature must be a numeric vector")
     return(NULL)
   }
-  if(length(feature) != nrow(ConDecon_obj$norm_cell.prob)){
+  if(length(feature) != nrow(ConDecon_obj$Normalized_cell.prob)){
     message("The length of 'feature' must be equal to the number of cells in the\n
             reference single-cell data")
     return(NULL)
   }
   if(is.null(names(feature))){
-    names(feature) <- rownames(ConDecon_obj$norm_cell.prob)
-  } else if(sum(names(feature) %in% row.names(ConDecon_obj$norm_cell.prob)) != nrow(ConDecon_obj$norm_cell.prob)){
+    names(feature) <- rownames(ConDecon_obj$Normalized_cell.prob)
+  } else if(sum(names(feature) %in% row.names(ConDecon_obj$Normalized_cell.prob)) != nrow(ConDecon_obj$Normalized_cell.prob)){
     message("Names of 'feature' must be the column/cell names in the reference single-cell data")
     return(NULL)
   } else {
-    feature = feature[row.names(ConDecon_obj$norm_cell.prob)]
+    feature = feature[row.names(ConDecon_obj$Normalized_cell.prob)]
   }
   if(is.null(ConDecon_obj$TransferFeatures)){
     ConDecon_obj$TransferFeatures <- NULL
   }
 
+  cat(paste0("Transferring ", feature_name, "... \n"))
   ## Remove long tails (bottom quartile of distribution) from predicted cell probability distributions
-  cell_prob_smooth = smooth_cell_prob(ConDecon_obj$norm_cell.prob, probs = probs)
+  cell_prob_smooth = smooth_cell_prob(ConDecon_obj$Normalized_cell.prob, probs = probs)
   ## Dot product between smoothed cell probability distribution and numeric feature
   transfer_feature = feature %*% cell_prob_smooth
   ## Normalize
@@ -67,6 +70,9 @@ TransferFeatures <- function(ConDecon_obj,
     ConDecon_obj$TransferFeatures <- rbind(ConDecon_obj$TransferFeatures, transfer_feature)
   }
 
+  #Order list of lists in ConDecon object
+  ConDecon_obj <- ConDecon_obj[c("Normalized_cell.prob", "Relative_cell.prob", "TransferFeatures", "PredictCellProb", "Model", "TrainingSet")]
+  class(ConDecon_obj) = "ConDecon"
   return(ConDecon_obj)
 }
 

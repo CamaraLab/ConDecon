@@ -24,7 +24,7 @@ TransferFeatures(
 ConDecon object with a matrix called 'TransferFeatures' containing the transferred feature (rows) for each bulk sample (column)
 }
 \description{
-Using ConDecon's predicted cell probability distribution, transfer a numeric feature from the single-cell data to the bulk data
+Using ConDecon's predicted cell probability distributions, transfer a numeric feature from the single-cell data to the bulk data
 }
 \examples{
 data(counts_gps)
@@ -36,7 +36,8 @@ data(variable_genes_gps)
 ConDecon_obj = RunConDecon(counts = counts_gps, latent = latent_gps, bulk = bulk_gps,
 variable.features = variable_genes_gps, max.iter = 50)
 
-# add transferred feature to ConDecon object: ConDecon_obj$TransferFeatures[feature_name,]
-# Transfer the expression of a randomly selected gene from the count matrix
-ConDecon_obj = TransferFeatures(ConDecon_obj = ConDecon_obj, feature = counts_gps[sample(x = 1:nrow(counts_gps), size = 1),])
+# Transfer feature to ConDecon object: ConDecon_obj$TransferFeatures[feature_name,]
+# For this example, randomly selected gene from the count matrix to transfer
+random_gene = counts_gps[sample(x = 1:nrow(counts_gps), size = 1),]
+ConDecon_obj = TransferFeatures(ConDecon_obj = ConDecon_obj, feature = random_gene)
 }
