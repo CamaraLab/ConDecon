@@ -31,7 +31,7 @@ PlotConDecon <- function(ConDecon_obj,
                          cells = NULL,
                          title_names = samples){
 
-  umap <- data.frame(Dim_1 = umap[,1], Dim_2 = umap[,2])
+  umap <- data.frame(Dim_1 = umap[,1], Dim_2 = umap[,2], row.names = row.names(umap))
 
   #Identify the bulk samples to plot
   if(is.null(samples)){
