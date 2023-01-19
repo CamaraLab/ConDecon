@@ -31,6 +31,9 @@
     <loc>/reference/BulkCells_subfxn.html</loc>
   </url>
   <url>
+    <loc>/reference/CalcRelativeCellProb.html</loc>
+  </url>
+  <url>
     <loc>/reference/CellProb.html</loc>
   </url>
   <url>
@@ -64,6 +67,9 @@
     <loc>/reference/RunConDecon.html</loc>
   </url>
   <url>
+    <loc>/reference/TransferFeatures.html</loc>
+  </url>
+  <url>
     <loc>/reference/bulk_gps.html</loc>
   </url>
   <url>
@@ -77,6 +83,12 @@
   </url>
   <url>
     <loc>/reference/latent_gps.html</loc>
+  </url>
+  <url>
+    <loc>/reference/set_zero.html</loc>
+  </url>
+  <url>
+    <loc>/reference/smooth_cell_prob.html</loc>
   </url>
   <url>
     <loc>/reference/true_prop_gps.html</loc>

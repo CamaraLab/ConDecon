@@ -71,9 +71,6 @@
 
     
     
-<div class="section level2">
-<h2 id="apply-condecon-to-spatial-transcriptomic-data">Apply ConDecon to Spatial Transcriptomic data<a class="anchor" aria-label="anchor" href="#apply-condecon-to-spatial-transcriptomic-data"></a>
-</h2>
 <p>ConDecon’s general approach for estimating cell abundances can be
 applied to other omics data modalities such as spatial transcriptomics.
 In this tutorial, we will apply ConDecon to stereo-seq and single-cell
@@ -102,7 +99,7 @@ data.</p>
 <span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">scRNA_meta_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">UMAP1</span>, <span class="va">UMAP2</span>, color <span class="op">=</span> <span class="va">dpt_pseudotime</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.75</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_color_viridis_c</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"plasma"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu">grid.arrange</span><span class="op">(</span><span class="va">p1</span>, <span class="va">p2</span>, ncol<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Spatial_scRNA.png" width="500px"></p>
+<p><img src="Spatial_scRNA2.png" width="800px"></p>
 <p>We are interested in using ConDecon to deconvolve each pixel of the
 tissue section profiled by stereo-seq. To reduce the the computational
 time necessary to run this tutorial, we have included the stereo-seq
@@ -114,7 +111,7 @@ data associated with a one tissue section on Zenodo.</p>
 <code class="sourceCode R"><span><span class="co"># Visualize the cell type annotations of the stereo-seq data from 1 tissue section</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">stereoseq_meta_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">spatial_x</span>, <span class="va">spatial_y</span>, color <span class="op">=</span> <span class="va">bin_annotation</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_linedraw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Spatial_slice1_celltypes.png" width="500px"></p>
+<p><img src="Spatial_slice1_celltypes.png" width="800px"></p>
 <p>We can now use ConDecon to deconvolve this spot-based spatial
 transcriptomic data using single-cell RNA-seq data as reference.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -131,7 +128,8 @@ transcriptomic data using single-cell RNA-seq data as reference.</p>
 <span><span class="co"># Time difference of 4.49636 mins</span></span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Let's visualize the cell abundance distribution of 3 example spots</span></span>
-<span><span class="va">ConDecon_obj</span> <span class="op">=</span> <span class="fu"><a href="../reference/PlotConDecon.html">PlotConDecon</a></span><span class="op">(</span><span class="va">ConDecon_obj</span>, umap <span class="op">=</span> <span class="va">scRNA_meta_data</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"UMAP1"</span>, <span class="st">"UMAP2"</span><span class="op">)</span><span class="op">]</span>, </span>
+<span><span class="va">ConDecon_obj</span> <span class="op">=</span> <span class="fu"><a href="../reference/PlotConDecon.html">PlotConDecon</a></span><span class="op">(</span><span class="va">ConDecon_obj</span>, </span>
+<span>                            umap <span class="op">=</span> <span class="va">scRNA_meta_data</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"UMAP1"</span>, <span class="st">"UMAP2"</span><span class="op">)</span><span class="op">]</span>, </span>
 <span>                            samples <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"DNB_3795_15810"</span>, <span class="st">"DNB_3945_15525"</span>, <span class="st">"DNB_4080_15600"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Spatial_CellProb_3examples_smaller.png" width="500px"></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -139,7 +137,21 @@ transcriptomic data using single-cell RNA-seq data as reference.</p>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">stereoseq_meta_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">spatial_x</span>, <span class="va">spatial_y</span>, color <span class="op">=</span> <span class="va">three_examples</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_linedraw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Spatial_slice1_3examples.png" width="500px"></p>
-</div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ConDecon_obj</span> <span class="op">=</span> <span class="fu"><a href="../reference/TransferFeatures.html">TransferFeatures</a></span><span class="op">(</span>ConDecon_obj <span class="op">=</span> <span class="va">ConDecon_obj</span>, </span>
+<span>                                feature <span class="op">=</span> <span class="va">scRNA_meta_data</span><span class="op">$</span><span class="va">dpt_pseudotime</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">stereoseq_meta_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">spatial_x</span>, <span class="va">spatial_y</span>, color <span class="op">=</span> <span class="va">ConDecon_obj</span><span class="op">$</span><span class="va">TransferFeatures</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_color_viridis_c</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"plasma"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_linedraw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Spatial_slice1_TransferFeature.png" width="500px"></p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">meta_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>celltype <span class="op">=</span> <span class="va">stereoseq_meta_data</span><span class="op">$</span><span class="va">bin_annotation</span>, </span>
+<span>                        transfer_pstime <span class="op">=</span> <span class="va">ConDecon_obj</span><span class="op">$</span><span class="va">TransferFeatures</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">meta_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">celltype</span>, y<span class="op">=</span><span class="va">transfer_pstime</span>, color <span class="op">=</span> <span class="va">celltype</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html" class="external-link">geom_violin</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html" class="external-link">geom_boxplot</a></span><span class="op">(</span>width<span class="op">=</span><span class="fl">0.3</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Spatial_slice1_boxplot.png" width="500px"></p>
   </main>
 </div>
 

@@ -52,13 +52,13 @@ of cell abundances and correlations on a basis of functions</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">Map2Latent</span><span class="op">(</span><span class="va">output</span>, <span class="va">latent</span>, <span class="va">count</span>, <span class="va">bulk</span>, <span class="va">variable.features</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">Map2Latent</span><span class="op">(</span><span class="va">TrainingSet</span>, <span class="va">latent</span>, <span class="va">count</span>, <span class="va">bulk</span>, <span class="va">variable.features</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>output</dt>
-<dd><p>Training set object</p></dd>
+    <dl><dt>TrainingSet</dt>
+<dd><p>Training set data (output from BuildTrainingSet)</p></dd>
 
 
 <dt>latent</dt>
@@ -92,9 +92,10 @@ of cell abundances and correlations</p>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">bulk_gps</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">variable_genes_gps</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">TrainingSet</span> <span class="op">=</span> <span class="fu"><a href="BuildTrainingSet.html">BuildTrainingSet</a></span><span class="op">(</span>count <span class="op">=</span> <span class="va">counts_gps</span>, latent <span class="op">=</span> <span class="va">latent_gps</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># For this example, we will reduce the training size to max.iter = 50 to reduce run time</span></span></span>
+<span class="r-in"><span><span class="va">TrainingSet</span> <span class="op">=</span> <span class="fu"><a href="BuildTrainingSet.html">BuildTrainingSet</a></span><span class="op">(</span>count <span class="op">=</span> <span class="va">counts_gps</span>, latent <span class="op">=</span> <span class="va">latent_gps</span>, max.iter <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">ConDecon_obj</span> <span class="op">=</span> <span class="fu">Map2Latent</span><span class="op">(</span>output <span class="op">=</span> <span class="va">TrainingSet</span>, latent <span class="op">=</span> <span class="va">latent_gps</span>, count <span class="op">=</span> <span class="va">counts_gps</span>,</span></span>
+<span class="r-in"><span><span class="va">ConDecon_obj</span> <span class="op">=</span> <span class="fu">Map2Latent</span><span class="op">(</span>TrainingSet <span class="op">=</span> <span class="va">TrainingSet</span>, latent <span class="op">=</span> <span class="va">latent_gps</span>, count <span class="op">=</span> <span class="va">counts_gps</span>,</span></span>
 <span class="r-in"><span>bulk <span class="op">=</span> <span class="va">bulk_gps</span>, variable.features <span class="op">=</span> <span class="va">variable_genes_gps</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>

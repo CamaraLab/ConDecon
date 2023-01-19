@@ -55,10 +55,10 @@ to generate a traning dataset from the reference single-cell data</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">BuildTrainingSet</span><span class="op">(</span></span>
 <span>  <span class="va">count</span>,</span>
 <span>  <span class="va">latent</span>,</span>
-<span>  max.iter <span class="op">=</span> <span class="fl">10000</span>,</span>
+<span>  max.iter <span class="op">=</span> <span class="fl">5000</span>,</span>
 <span>  max.cent <span class="op">=</span> <span class="fl">5</span>,</span>
-<span>  step <span class="op">=</span> <span class="fl">10000</span>,</span>
-<span>  dims <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">latent</span><span class="op">)</span>,</span>
+<span>  step <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">max.iter</span> <span class="op">&lt;=</span> <span class="fl">10000</span>, <span class="va">max.iter</span>, <span class="fl">10000</span><span class="op">)</span>,</span>
+<span>  dims <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>  min.cent <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">count</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span>,</span>
 <span>  sigma_min_cells <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -128,7 +128,8 @@ deviation of the Gaussian</p></dd>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">counts_gps</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">latent_gps</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">TrainingSet</span> <span class="op">=</span> <span class="fu">BuildTrainingSet</span><span class="op">(</span>count <span class="op">=</span> <span class="va">counts_gps</span>, latent <span class="op">=</span> <span class="va">latent_gps</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># For this example, we will reduce the training size to max.iter = 50 to reduce run time</span></span></span>
+<span class="r-in"><span><span class="va">TrainingSet</span> <span class="op">=</span> <span class="fu">BuildTrainingSet</span><span class="op">(</span>count <span class="op">=</span> <span class="va">counts_gps</span>, latent <span class="op">=</span> <span class="va">latent_gps</span>, max.iter <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
