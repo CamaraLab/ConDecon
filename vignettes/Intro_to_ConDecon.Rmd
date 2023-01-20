@@ -14,6 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
+
 ConDecon is a clustering-independent method for estimating cell abundances in bulk tissues using single-cell omics data as reference. In this tutorial, we will apply ConDecon to simulated transcriptomic data and visualize the expected results.
 
 ```{r setup}
@@ -21,7 +22,8 @@ library(ConDecon)
 library(ggplot2)
 ```
 
-As a reference dataset, we will use simulated single-cell RNA-seq data containing 9 clusters/groups (gps). This data was generated using the software [*Splatter*](https://doi.org/10.1186/s13059-017-1305-0). We will start by loading the single-cell RNA-seq count and meta data provided by the ConDecon package.
+
+As a reference dataset, we will use simulated single-cell RNA-seq data containing 9 clusters/groups (gps). This data was generated using the software [*Splatter*](https://doi.org/10.1186/s13059-017-1305-0). We will start by loading the single-cell count and meta data provided by the ConDecon package.
 
 ```{r}
 # Single-cell gene expression count data
@@ -47,12 +49,14 @@ ggplot(data.frame(umap_embedding_gps), aes(x = UMAP_1, y = UMAP_2, color = cell_
   theme_classic()
 ```
 
-For this example, we will use ConDecon to deconvolve 5 simulated bulk transcriptomic profiles.
+
+We will use ConDecon to deconvolve 5 simulated bulk transcriptomic profiles.
 
 ```{r}
 # Bulk gene expression data, normalized by TPMs
 data("bulk_gps")
 ```
+
 
 ‘RunConDecon’ is the main function necessary to infer cell abundances for each input bulk sample. This function requires 4 inputs:
 
@@ -61,7 +65,7 @@ data("bulk_gps")
 3. Character vector of variable features associated with the single-cell data
 4. Normalized bulk data matrix
 
-The output of this function is a ConDecon object containing a norm_cell.probs matrix with the predicted cell probability distributions.
+The output of this function is a ConDecon object containing a Normalized_cell.probs matrix with the predicted cell probability distributions.
 
 ```{r}
 ConDecon_obj = RunConDecon(counts = counts_gps, 
@@ -71,7 +75,8 @@ ConDecon_obj = RunConDecon(counts = counts_gps,
                            dims = 10)
 ```
 
-Plot the predicted cell abundances for each of the 5 bulk samples:
+
+With 'PlotConDecon', we can visualize the relative cell probabilities of each of the 5 bulk sample.
 
 ```{r}
 PlotConDecon(ConDecon_obj = ConDecon_obj,

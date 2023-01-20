@@ -31,7 +31,33 @@ Aubin, R. G., Montelongo, J., Hu, R., Camara, P. G. *Clustering-independent esti
     devtools::install_github("CamaraLab/ConDecon")
     library(ConDecon)
 
-## Tutorials
+## Table of Contents
 
-Tutorial for applying ConDecon to simulated bulk and single-cell RNA-seq data: [Quick set up and example](https://camaralab.github.io/ConDecon/articles/Intro_to_ConDecon.html)
-Tutorial for applying ConDecon spatial transcriptomic data: [Spatial example](https://camaralab.github.io/ConDecon/articles/Spatial_RNA.html)
+A complete guild of ConDecon's tutorials and API is available [here](https://camaralab.github.io/ConDecon/index.html).
+
+#### Tutorials
+
+-   Tutorial applying ConDecon to simulated bulk and single-cell RNA-seq data: [Quick set up and example](https://camaralab.github.io/ConDecon/articles/Intro_to_ConDecon.html)
+-   Tutorial applying ConDecon spatial transcriptomic data: [Spatial RNA example](https://camaralab.github.io/ConDecon/articles/Spatial_RNA.html)
+-   Tutorial applying ConDecon to chromatin accessibility data: [ATAC example](https://camaralab.github.io/ConDecon/articles/Chromatin_Accessibility_Data.html)
+
+#### API Reference
+
+A list of the main user functions in the ConDecon package:
+
+-   [RunConDecon](https://camaralab.github.io/ConDecon/reference/RunConDecon.html)
+-   [PlotConDecon](https://camaralab.github.io/ConDecon/reference/PlotConDecon.html)
+-   [TransferFeatures](https://camaralab.github.io/ConDecon/reference/TransferFeatures.html)
+-   [BuildTrainingSet](https://camaralab.github.io/ConDecon/reference/BuildTrainingSet.html)
+-   [Map2Latent](https://camaralab.github.io/ConDecon/reference/Map2Latent.html)
+-   [BuildModel](https://camaralab.github.io/ConDecon/reference/BuildModel.html)
+-   [PredictCellProb](https://camaralab.github.io/ConDecon/reference/PredictCellProb.html)
+-   [CalcRelativeCellProb](https://camaralab.github.io/ConDecon/reference/CalcRelativeCellProb.html)
+
+A list of example data included in the ConDecon package:
+
+-   Simulated single-cell RNA-seq counts data: [counts_gps](https://camaralab.github.io/ConDecon/reference/counts_gps.html)
+-   PCA representation of 'counts_gps': [latent_gps](https://camaralab.github.io/ConDecon/reference/latent_gps.html)
+-   Variable genes associated with 'counts_gps': [variable_genes_gps](https://camaralab.github.io/ConDecon/reference/variable_genes_gps.html)
+-   Meta data associated with 'counts_gps': [meta_data_gps]()
+-   Simulated Bulk RNA-seq data: [bulk_gps](https://camaralab.github.io/ConDecon/reference/bulk_gps.html)

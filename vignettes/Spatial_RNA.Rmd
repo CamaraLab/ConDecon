@@ -1,8 +1,8 @@
 ---
-title: "Applying ConDecon to spatial transcriptomic data"
+title: "Spatial transcriptomic data"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Applying ConDecon to spatial transcriptomic data}
+  %\VignetteIndexEntry{Spatial transcriptomic data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,6 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
+
 ConDecon's general approach for estimating cell abundances can be applied to other omics data modalities such as spatial transcriptomics. In this tutorial, we will apply ConDecon to stereo-seq and single-cell RNA-seq data of 10 zebrafish embryos profiled 3.3 hours post-fertilization ([Lui et al, Developmental Cell, 2022](https://doi.org/10.1016/j.devcel.2022.04.009)). For convenience, the data associated with this tutorial is available on Zenodo.
 
 ```{r, eval=FALSE}
@@ -21,6 +22,7 @@ library(ConDecon)
 library(ggplot2)
 library(gridExtra)
 ```
+
 
 As a reference dataset, we will use single-cell RNA-seq data of embryos 3.3 hpf from the same study and used diffusion pseudotime to parameterize the differentiation of blastomere cells in these data. We will start by loading in the single-cell RNA-seq count and meta data.
 
@@ -40,9 +42,10 @@ p2 <- ggplot(scRNA_meta_data, aes(UMAP1, UMAP2, color = dpt_pseudotime)) +
   geom_point(size = 0.75) + scale_color_viridis_c(option = "plasma") + theme_classic()
 grid.arrange(p1, p2, ncol=2)
 ```
-```{r, echo=FALSE, out.width="800px"}
+```{r, echo=FALSE, out.width="900px"}
 knitr::include_graphics("Spatial_scRNA2.png")
 ```
+
 
 We are interested in using ConDecon to deconvolve each pixel of the tissue section profiled by stereo-seq. To reduce the the computational time necessary to run this tutorial, we have included the stereo-seq data associated with a one tissue section on Zenodo.
 
@@ -57,9 +60,10 @@ ggplot(stereoseq_meta_data, aes(spatial_x, spatial_y, color = bin_annotation)) +
   geom_point() + 
   theme_linedraw()
 ```
-```{r, echo=FALSE, out.width="600px"}
+```{r, echo=FALSE, out.width="700px"}
 knitr::include_graphics("Spatial_slice1_celltypes.png")
 ```
+
 
 We can now use 'RunConDecon' to deconvolve this spot-based spatial transcriptomic data using single-cell RNA-seq data as reference.
 
@@ -77,6 +81,7 @@ print(endTime - startTime)
 # Time difference of 4.49636 mins/Time difference of 6.747742 mins
 ```
 
+
 With 'PlotConDecon', we can visualize the relative cell probabilities of 3 example spots. 
 
 ```{r, eval=FALSE}
@@ -85,7 +90,7 @@ PlotConDecon(ConDecon_obj,
              umap = scRNA_meta_data[, c("UMAP1", "UMAP2")], 
              samples = c("DNB_3795_15810", "DNB_3945_15525", "DNB_4080_15600"))
 ```
-```{r, echo=FALSE, out.width="800px"}
+```{r, echo=FALSE, out.width="900px"}
 knitr::include_graphics("Spatial_CellProb_3examples_smaller.png")
 ```
 
@@ -96,9 +101,10 @@ ggplot(stereoseq_meta_data, aes(spatial_x, spatial_y, color = three_examples)) +
   scale_color_manual(values=c("#009E73", "#E69F00", "#56B4E9", "#CCCCCC")) + 
   theme_linedraw()
 ```
-```{r, echo=FALSE, out.width="600px"}
+```{r, echo=FALSE, out.width="700px"}
 knitr::include_graphics("Spatial_slice1_3examples.png")
 ```
+
 
 We can now use the cell probabilities inferred by ConDecon for each pixel to deconvolve pseudotime in the spatial data. Using 'TransferFeatures', we will transfer the pseudotime estimates from the reference single-cell data to the stereo-seq data. 
 
@@ -106,6 +112,7 @@ We can now use the cell probabilities inferred by ConDecon for each pixel to dec
 ConDecon_obj = TransferFeatures(ConDecon_obj = ConDecon_obj, 
                                 feature = scRNA_meta_data$dpt_pseudotime)
 ```
+
 
 The resulting trajectories recapitulated the known spatial patterns of cell differentiation in the blastodisc, where the differentiation sequence progresses from marginal blastomere cells into deep and superficial blastomere cells. 
 
@@ -116,9 +123,10 @@ ggplot(stereoseq_meta_data, aes(spatial_x, spatial_y, color = ConDecon_obj$Trans
   scale_color_viridis_c(option = "plasma") + 
   theme_linedraw()
 ```
-```{r, echo=FALSE, out.width="600px"}
-knitr::include_graphics("Spatial_slice1_TransferFeature.png")
+```{r, echo=FALSE, out.width="700px"}
+knitr::include_graphics("Spatial_slice1_TransferFeature_fullcount.png")
 ```
+
 
 ```{r, eval=FALSE}
 meta_data <- data.frame(celltype = stereoseq_meta_data$bin_annotation, 
@@ -130,6 +138,6 @@ ggplot(meta_data, aes(x=celltype, y=transfer_pstime, color = celltype)) +
   theme_classic()
 ```
 ```{r, echo=FALSE, out.width="600px"}
-knitr::include_graphics("Spatial_slice1_boxplot.png")
+knitr::include_graphics("Spatial_slice1_boxplot_fullcount.png")
 ```
 
