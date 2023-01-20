@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-ConDecon's general approach for estimating cell abundances can be applied to other omics data modalities such as spatial transcriptomics. In this tutorial, we will apply ConDecon to stereo-seq and single-cell RNA-seq data of 10 zebrafish embryos profiled 3.3 hours post-fertilization ([Lui et al, Developmental Cell, 2022](https://doi.org/10.1016/j.devcel.2022.04.009)). For your convenience, the data associated with this tutorial is available on Zenodo.
+ConDecon's general approach for estimating cell abundances can be applied to other omics data modalities such as spatial transcriptomics. In this tutorial, we will apply ConDecon to stereo-seq and single-cell RNA-seq data of 10 zebrafish embryos profiled 3.3 hours post-fertilization ([Lui et al, Developmental Cell, 2022](https://doi.org/10.1016/j.devcel.2022.04.009)). For convenience, the data associated with this tutorial is available on Zenodo.
 
 ```{r, eval=FALSE}
 library(ConDecon)
@@ -61,7 +61,7 @@ ggplot(stereoseq_meta_data, aes(spatial_x, spatial_y, color = bin_annotation)) +
 knitr::include_graphics("Spatial_slice1_celltypes.png")
 ```
 
-We can now use ConDecon to deconvolve this spot-based spatial transcriptomic data using single-cell RNA-seq data as reference.
+We can now use 'RunConDecon' to deconvolve this spot-based spatial transcriptomic data using single-cell RNA-seq data as reference.
 
 ```{r, eval=FALSE}
 startTime <- Sys.time()
@@ -74,14 +74,16 @@ ConDecon_obj <- RunConDecon(counts = scRNA_count,
 
 endTime <- Sys.time()
 print(endTime - startTime)
-# Time difference of 4.49636 mins
+# Time difference of 4.49636 mins/Time difference of 6.747742 mins
 ```
+
+With 'PlotConDecon', we can visualize the relative cell probabilities of 3 example spots. 
 
 ```{r, eval=FALSE}
 # Let's visualize the cell abundance distribution of 3 example spots
-ConDecon_obj = PlotConDecon(ConDecon_obj, 
-                            umap = scRNA_meta_data[, c("UMAP1", "UMAP2")], 
-                            samples = c("DNB_3795_15810", "DNB_3945_15525", "DNB_4080_15600"))
+PlotConDecon(ConDecon_obj, 
+             umap = scRNA_meta_data[, c("UMAP1", "UMAP2")], 
+             samples = c("DNB_3795_15810", "DNB_3945_15525", "DNB_4080_15600"))
 ```
 ```{r, echo=FALSE, out.width="800px"}
 knitr::include_graphics("Spatial_CellProb_3examples_smaller.png")
@@ -91,18 +93,24 @@ knitr::include_graphics("Spatial_CellProb_3examples_smaller.png")
 # Identify the location of these spots on the tissue section
 ggplot(stereoseq_meta_data, aes(spatial_x, spatial_y, color = three_examples)) + 
   geom_point() + 
+  scale_color_manual(values=c("#009E73", "#E69F00", "#56B4E9", "#CCCCCC")) + 
   theme_linedraw()
 ```
 ```{r, echo=FALSE, out.width="600px"}
 knitr::include_graphics("Spatial_slice1_3examples.png")
 ```
 
+We can now use the cell probabilities inferred by ConDecon for each pixel to deconvolve pseudotime in the spatial data. Using 'TransferFeatures', we will transfer the pseudotime estimates from the reference single-cell data to the stereo-seq data. 
+
 ```{r, eval=FALSE}
 ConDecon_obj = TransferFeatures(ConDecon_obj = ConDecon_obj, 
                                 feature = scRNA_meta_data$dpt_pseudotime)
 ```
 
+The resulting trajectories recapitulated the known spatial patterns of cell differentiation in the blastodisc, where the differentiation sequence progresses from marginal blastomere cells into deep and superficial blastomere cells. 
+
 ```{r, eval=FALSE}
+# Visualize the pseudotime estimates for each pixel
 ggplot(stereoseq_meta_data, aes(spatial_x, spatial_y, color = ConDecon_obj$TransferFeatures[1,])) + 
   geom_point() + 
   scale_color_viridis_c(option = "plasma") + 

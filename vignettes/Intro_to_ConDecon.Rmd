@@ -43,7 +43,8 @@ data(cell_gps)
 ```{r}
 # Visualize the cluster annotations of the single-cell RNA seq data
 ggplot(data.frame(umap_embedding_gps), aes(x = UMAP_1, y = UMAP_2, color = cell_gps)) + 
-      geom_point(size = 0.5) + theme_classic()
+  geom_point(size = 0.5) + 
+  theme_classic()
 ```
 
 For this example, we will use ConDecon to deconvolve 5 simulated bulk transcriptomic profiles.
@@ -63,16 +64,17 @@ data("bulk_gps")
 The output of this function is a ConDecon object containing a norm_cell.probs matrix with the predicted cell probability distributions.
 
 ```{r}
-condecon_object = RunConDecon(counts = counts_gps, 
-                              latent = latent_gps, 
-                              variable.features = variable_genes_gps, 
-                              bulk = bulk_gps, 
-                              dims = 10)
+ConDecon_obj = RunConDecon(counts = counts_gps, 
+                           latent = latent_gps, 
+                           variable.features = variable_genes_gps, 
+                           bulk = bulk_gps, 
+                           dims = 10)
 ```
 
 Plot the predicted cell abundances for each of the 5 bulk samples:
 
 ```{r}
-PlotConDecon(ConDecon = condecon_object, umap = umap_embedding_gps)
+PlotConDecon(ConDecon_obj = ConDecon_obj,
+             umap = umap_embedding_gps)
 ```
 
