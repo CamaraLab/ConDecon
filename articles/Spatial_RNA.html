@@ -41,6 +41,7 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/Chromatin_Accessibility_Data.html">Apply ConDecon to chromatin accessibility data</a>
     <a class="dropdown-item" href="../articles/Intro_to_ConDecon.html">Quick set up and example</a>
     <a class="dropdown-item" href="../articles/Spatial_RNA.html">Applying ConDecon to spatial transcriptomic data</a>
   </div>
@@ -76,8 +77,8 @@ applied to other omics data modalities such as spatial transcriptomics.
 In this tutorial, we will apply ConDecon to stereo-seq and single-cell
 RNA-seq data of 10 zebrafish embryos profiled 3.3 hours
 post-fertilization (<a href="https://doi.org/10.1016/j.devcel.2022.04.009" class="external-link">Lui et al,
-Developmental Cell, 2022</a>). For your convenience, the data associated
-with this tutorial is available on Zenodo.</p>
+Developmental Cell, 2022</a>). For convenience, the data associated with
+this tutorial is available on Zenodo.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ConDecon</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
@@ -114,7 +115,7 @@ data associated with a one tissue section on Zenodo.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_linedraw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Spatial_slice1_celltypes.png" width="600px"></p>
-<p>We can now use ConDecon to deconvolve this spot-based spatial
+<p>We can now use ‘RunConDecon’ to deconvolve this spot-based spatial
 transcriptomic data using single-cell RNA-seq data as reference.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">startTime</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -127,24 +128,36 @@ transcriptomic data using single-cell RNA-seq data as reference.</p>
 <span></span>
 <span><span class="va">endTime</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">endTime</span> <span class="op">-</span> <span class="va">startTime</span><span class="op">)</span></span>
-<span><span class="co"># Time difference of 4.49636 mins</span></span></code></pre></div>
+<span><span class="co"># Time difference of 4.49636 mins/Time difference of 6.747742 mins</span></span></code></pre></div>
+<p>With ‘PlotConDecon’, we can visualize the relative cell probabilities
+of 3 example spots.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Let's visualize the cell abundance distribution of 3 example spots</span></span>
-<span><span class="va">ConDecon_obj</span> <span class="op">=</span> <span class="fu"><a href="../reference/PlotConDecon.html">PlotConDecon</a></span><span class="op">(</span><span class="va">ConDecon_obj</span>, </span>
-<span>                            umap <span class="op">=</span> <span class="va">scRNA_meta_data</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"UMAP1"</span>, <span class="st">"UMAP2"</span><span class="op">)</span><span class="op">]</span>, </span>
-<span>                            samples <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"DNB_3795_15810"</span>, <span class="st">"DNB_3945_15525"</span>, <span class="st">"DNB_4080_15600"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/PlotConDecon.html">PlotConDecon</a></span><span class="op">(</span><span class="va">ConDecon_obj</span>, </span>
+<span>             umap <span class="op">=</span> <span class="va">scRNA_meta_data</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"UMAP1"</span>, <span class="st">"UMAP2"</span><span class="op">)</span><span class="op">]</span>, </span>
+<span>             samples <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"DNB_3795_15810"</span>, <span class="st">"DNB_3945_15525"</span>, <span class="st">"DNB_4080_15600"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Spatial_CellProb_3examples_smaller.png" width="800px"></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Identify the location of these spots on the tissue section</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">stereoseq_meta_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">spatial_x</span>, <span class="va">spatial_y</span>, color <span class="op">=</span> <span class="va">three_examples</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_color_manual</a></span><span class="op">(</span>values<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#009E73"</span>, <span class="st">"#E69F00"</span>, <span class="st">"#56B4E9"</span>, <span class="st">"#CCCCCC"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_linedraw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Spatial_slice1_3examples.png" width="600px"></p>
+<p>We can now use the cell probabilities inferred by ConDecon for each
+pixel to deconvolve pseudotime in the spatial data. Using
+‘TransferFeatures’, we will transfer the pseudotime estimates from the
+reference single-cell data to the stereo-seq data.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ConDecon_obj</span> <span class="op">=</span> <span class="fu"><a href="../reference/TransferFeatures.html">TransferFeatures</a></span><span class="op">(</span>ConDecon_obj <span class="op">=</span> <span class="va">ConDecon_obj</span>, </span>
 <span>                                feature <span class="op">=</span> <span class="va">scRNA_meta_data</span><span class="op">$</span><span class="va">dpt_pseudotime</span><span class="op">)</span></span></code></pre></div>
+<p>The resulting trajectories recapitulated the known spatial patterns
+of cell differentiation in the blastodisc, where the differentiation
+sequence progresses from marginal blastomere cells into deep and
+superficial blastomere cells.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">stereoseq_meta_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">spatial_x</span>, <span class="va">spatial_y</span>, color <span class="op">=</span> <span class="va">ConDecon_obj</span><span class="op">$</span><span class="va">TransferFeatures</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<code class="sourceCode R"><span><span class="co"># Visualize the pseudotime estimates for each pixel</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">stereoseq_meta_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">spatial_x</span>, <span class="va">spatial_y</span>, color <span class="op">=</span> <span class="va">ConDecon_obj</span><span class="op">$</span><span class="va">TransferFeatures</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_color_viridis_c</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"plasma"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_linedraw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
