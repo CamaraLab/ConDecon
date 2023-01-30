@@ -1,8 +1,8 @@
 ---
-title: "B cells RNA"
+title: "B-cells transcriptomic data"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{B cells RNA}
+  %\VignetteIndexEntry{B-cells transcriptomic data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -40,14 +40,15 @@ g1 <- ggplot(scRNA_meta_data, aes(x = UMAP_1, y = UMAP_2, color = cellType)) +
   geom_point(size = 0.5) + 
   theme_classic()
 # Visualize the mouse age of the single-cell RNA-seq data
-g2 <- ggplot(scRNA_meta_data, aes(x = UMAP_1, y = UMAP_2, color = factor(as.character(Age_months), levels = c(3,18,24)))) + 
+g2 <- ggplot(scRNA_meta_data, aes(x = UMAP_1, y = UMAP_2, 
+                                  color = factor(as.character(Age_months), levels = c(3,18,24)))) + 
   geom_point(size = 0.5) + 
   theme_classic()
 
 grid.arrange(g1, g2, ncol=2)
 ```
-```{r, echo=FALSE, out.width="700px"}
-knitr::include_graphics("TM_B_cells_visual.png")
+```{r, echo=FALSE, out.width="1000px"}
+knitr::include_graphics("TM_B_cells_visual.svg")
 ```
 
 
@@ -82,10 +83,11 @@ With 'PlotConDecon', we can visualize the relative cell probabilities of each bu
 PlotConDecon(ConDecon_obj = ConDecon_obj, 
              umap = scRNA_meta_data[,c("UMAP_1", "UMAP_2")], 
              samples = row.names(BulkRNA_meta_data)[BulkRNA_meta_data$Age_months == 1], 
-             cells = row.names(scRNA_meta_data)[scRNA_meta_data$cellType %in% c("Pro_B_cells", "Immature_B_cells", "late pro-B cell", "Naive_B_cells", "Precursor_B_cells")])
+             cells = row.names(scRNA_meta_data)[scRNA_meta_data$cellType %in% 
+                                                  c("Pro_B_cells", "Immature_B_cells", "late pro-B cell", "Naive_B_cells", "Precursor_B_cells")])
 ```
 ```{r, echo=FALSE, out.width="700px"}
-knitr::include_graphics("TM_B_cells_1month.png")
+knitr::include_graphics("TM_B_cells_1month.svg")
 ```
 
 ```{r, eval=FALSE}
@@ -93,10 +95,11 @@ knitr::include_graphics("TM_B_cells_1month.png")
 PlotConDecon(ConDecon_obj = ConDecon_obj, 
              umap = scRNA_meta_data[,c("UMAP_1", "UMAP_2")], 
              samples = row.names(BulkRNA_meta_data)[BulkRNA_meta_data$Age_months == 12], 
-             cells = row.names(scRNA_meta_data)[scRNA_meta_data$cellType %in% c("Pro_B_cells", "Immature_B_cells", "late pro-B cell", "Naive_B_cells", "Precursor_B_cells")])
+             cells = row.names(scRNA_meta_data)[scRNA_meta_data$cellType %in% 
+                                                  c("Pro_B_cells", "Immature_B_cells", "late pro-B cell", "Naive_B_cells", "Precursor_B_cells")])
 ```
 ```{r, echo=FALSE, out.width="700px"}
-knitr::include_graphics("TM_B_cells_12months.png")
+knitr::include_graphics("TM_B_cells_12months.svg")
 ```
 
 ```{r, eval=FALSE}
@@ -104,10 +107,11 @@ knitr::include_graphics("TM_B_cells_12months.png")
 PlotConDecon(ConDecon_obj = ConDecon_obj, 
              umap = scRNA_meta_data[,c("UMAP_1", "UMAP_2")], 
              samples = row.names(BulkRNA_meta_data)[BulkRNA_meta_data$Age_months == 24], 
-             cells = row.names(scRNA_meta_data)[scRNA_meta_data$cellType %in% c("Pro_B_cells", "Immature_B_cells", "late pro-B cell", "Naive_B_cells", "Precursor_B_cells")])
+             cells = row.names(scRNA_meta_data)[scRNA_meta_data$cellType %in% 
+                                                  c("Pro_B_cells", "Immature_B_cells", "late pro-B cell", "Naive_B_cells", "Precursor_B_cells")])
 ```
 ```{r, echo=FALSE, out.width="700px"}
-knitr::include_graphics("TM_B_cells_24months.png")
+knitr::include_graphics("TM_B_cells_24months.svg")
 ```
 
 
@@ -130,7 +134,7 @@ ggplot(scRNA_meta_data, aes(x = UMAP_1, y = UMAP_2, color = monocle3_pseudotime)
   theme_classic()
 ```
 ```{r, echo=FALSE, out.width="700px"}
-knitr::include_graphics("TM_B_cells_pseudotime.png")
+knitr::include_graphics("TM_B_cells_pseudotime.svg")
 ```
 
 We can compare the estimated pseudotime of B-cells within each bulk sample to the age of each bulk sample. Consistent with the notion that there is a shift from an abundance of Pro B-cells in young mice to an abundance of Naive B-cells in fully developed mice, we find a strong correlation between ConDecon's estimated B-cell pseudotime and the age of the mouse in each bulk sample.
@@ -145,6 +149,6 @@ ggplot(data.frame(age_months = BulkRNA_meta_data$Age_months, predicted_B_cell_ps
   theme_classic()
 ```
 ```{r, echo=FALSE, out.width="700px"}
-knitr::include_graphics("TM_B_cells_LinePlot2.png")
+knitr::include_graphics("TM_B_cells_LinePlot3.svg")
 ```
 
