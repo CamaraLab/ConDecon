@@ -28,14 +28,14 @@ TransferFeatures <- function(ConDecon_obj,
                              feature_name = deparse(substitute(feature)),
                              probs = 0.75){
 
-  #Use invisible() to capture user's name for feature
+  #Use invisible() to capture user's original name for feature
   invisible(paste0("Transferring ", feature_name, "... \n"))
   if(!inherits(ConDecon_obj, what = "ConDecon")){
     message("ConDecon_obj must be an object with class 'ConDecon' output from RunConDecon")
     return(NULL)
   }
   if(!is.vector(feature)){
-    message("feature must be a numeric vector")
+    message("feature must be a vector")
     return(NULL)
   }
   if(length(feature) != nrow(ConDecon_obj$Normalized_cell.prob)){
@@ -54,10 +54,20 @@ TransferFeatures <- function(ConDecon_obj,
   if(is.null(ConDecon_obj$TransferFeatures)){
     ConDecon_obj$TransferFeatures <- NULL
   }
+  ## If feature is calculated for a subset of the cells, remove cell with NA
+  if(sum(is.na(feature)) == length(feature)){
+    message("'feature' only contains NA values")
+    return(NULL)
+  } else if(sum(is.na(feature))>0){
+    Normalized_cell.prob <- ConDecon_obj$Normalized_cell.prob[!is.na(feature),]
+    feature <- feature[!is.na(feature)]
+  } else{
+    Normalized_cell.prob <- ConDecon_obj$Normalized_cell.prob
+  }
 
   cat(paste0("Transferring ", feature_name, "... \n"))
   ## Remove long tails (bottom quartile of distribution) from predicted cell probability distributions
-  cell_prob_smooth = smooth_cell_prob(ConDecon_obj$Normalized_cell.prob, probs = probs)
+  cell_prob_smooth = smooth_cell_prob(Normalized_cell.prob, probs = probs)
   ## Dot product between smoothed cell probability distribution and numeric feature
   transfer_feature = feature %*% cell_prob_smooth
   ## Normalize
