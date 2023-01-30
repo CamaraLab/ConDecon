@@ -33,11 +33,12 @@ Aubin, R. G., Montelongo, J., Hu, R., Camara, P. G. *Clustering-independent esti
 
 ## Table of Contents
 
-A complete guild of ConDecon's tutorials and API is available [here](https://camaralab.github.io/ConDecon/index.html).
+A complete guide of ConDecon's tutorials and API is available [here](https://camaralab.github.io/ConDecon/index.html).
 
 #### Tutorials
 
--   Tutorial applying ConDecon to simulated bulk and single-cell RNA-seq data: [Quick set up and example](https://camaralab.github.io/ConDecon/articles/Intro_to_ConDecon.html)
+-   Tutorial applying ConDecon to simulated transcriptomic data: [Quick set up and example](https://camaralab.github.io/ConDecon/articles/Intro_to_ConDecon.html)
+-   Tutorial applying ConDecon to B-cells from scRNA-seq data: [B-cells example](https://camaralab.github.io/ConDecon/articles/B_cells_RNA.html)
 -   Tutorial applying ConDecon spatial transcriptomic data: [Spatial RNA example](https://camaralab.github.io/ConDecon/articles/Spatial_RNA.html)
 -   Tutorial applying ConDecon to chromatin accessibility data: [ATAC example](https://camaralab.github.io/ConDecon/articles/Chromatin_Accessibility_Data.html)
 
@@ -56,8 +57,10 @@ A list of the main user functions in the ConDecon package:
 
 A list of example data included in the ConDecon package:
 
--   Simulated single-cell RNA-seq counts data: [counts_gps](https://camaralab.github.io/ConDecon/reference/counts_gps.html)
--   PCA representation of 'counts_gps': [latent_gps](https://camaralab.github.io/ConDecon/reference/latent_gps.html)
--   Variable genes associated with 'counts_gps': [variable_genes_gps](https://camaralab.github.io/ConDecon/reference/variable_genes_gps.html)
--   Meta data associated with 'counts_gps': [meta_data_gps]()
--   Simulated Bulk RNA-seq data: [bulk_gps](https://camaralab.github.io/ConDecon/reference/bulk_gps.html)
+-   [counts_gps](https://camaralab.github.io/ConDecon/reference/counts_gps.html): Simulated single-cell RNA-seq counts data
+-   [latent_gps](https://camaralab.github.io/ConDecon/reference/latent_gps.html): PCA representation of 'counts_gps'
+-   [variable_genes_gps](https://camaralab.github.io/ConDecon/reference/variable_genes_gps.html): Variable genes associated with 'counts_gps'
+-   [meta_data_gps](https://camaralab.github.io/ConDecon/reference/meta_data_gps.html): Meta data associated with 'counts_gps'
+-   [bulk_gps](https://camaralab.github.io/ConDecon/reference/bulk_gps.html): Simulated bulk RNA-seq data
+-   [true_prop_gps](https://camaralab.github.io/ConDecon/reference/true_prop_gps.html): True cell type proportion of simulated bulk RNA-seq data
+
