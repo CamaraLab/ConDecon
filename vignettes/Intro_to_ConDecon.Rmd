@@ -35,17 +35,14 @@ data(latent_gps)
 # Top 2,000 variable genes
 data(variable_genes_gps)
 
-# UMAP embedding of the single-cell data
-data(umap_embedding_gps)
-
-# cluster IDs for the single-cell data
-data(cell_gps)
+# Meta data of single-cell RNA-seq data
+data(meta_data_gps)
 ```
 
 ```{r}
 # Visualize the cluster annotations of the single-cell RNA seq data
-ggplot(data.frame(umap_embedding_gps), aes(x = UMAP_1, y = UMAP_2, color = cell_gps)) + 
-  geom_point(size = 0.5) + 
+ggplot(data.frame(meta_data_gps), aes(x = UMAP_1, y = UMAP_2, color = celltypes)) + 
+  geom_point(size = 1.5) + 
   theme_classic()
 ```
 
@@ -78,8 +75,26 @@ ConDecon_obj = RunConDecon(counts = counts_gps,
 
 With 'PlotConDecon', we can visualize the relative cell probabilities of each of the 5 bulk sample.
 
-```{r}
+```{r, eval=FALSE}
 PlotConDecon(ConDecon_obj = ConDecon_obj,
-             umap = umap_embedding_gps)
+             umap = meta_data_gps[,c("UMAP_1", "UMAP_2")])
+```
+```{r, echo=FALSE, out.width="1000px"}
+knitr::include_graphics("Intro_bulk_CellProb.svg")
 ```
 
+We can compare ConDecon's predictions to the true cell type proportions of each simulated bulk sample.
+
+```{r, eval=FALSE}
+data(true_prop_gps)
+
+for(i in 1:5){
+  plot(ggplot(data=true_prop_gps, aes_string(x="celltypes", y=paste0("bulk", i), 
+                                             fill = "celltypes")) +
+    geom_bar(stat="identity") +
+    theme_classic())
+}
+```
+```{r, echo=FALSE, out.width="1000px"}
+knitr::include_graphics("Intro_bulk_barplot.svg")
+```
