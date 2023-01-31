@@ -10,8 +10,8 @@ ConDecon_obj = RunConDecon(counts = counts_gps, latent = latent_gps, bulk = bulk
                 variable.features = variable_genes_gps, dims = 10, max.iter = 50,
                 verbose = FALSE)
 
-data("umap_embedding_gps")
-ConDecon_obj = PlotConDecon(ConDecon_obj = ConDecon_obj, umap = umap_embedding_gps)
+data("meta_data_gps")
+ConDecon_obj = PlotConDecon(ConDecon_obj = ConDecon_obj, umap = meta_data_gps[,c("UMAP_1", "UMAP_2")])
 
 test_that("Check that ConDecon's predicted relative cell abundance matrix has the correct dims", {
   expect_equal(dim(ConDecon_obj$Relative_cell.prob), c(nrow(ConDecon_obj$Normalized_cell.prob), ncol(ConDecon_obj$Normalized_cell.prob)))

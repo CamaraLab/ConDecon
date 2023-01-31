@@ -18,15 +18,6 @@
 #' @examples data(bulk_gps)
 "bulk_gps"
 
-#' Cell type cluster IDs
-#'
-#' Cell type cluster IDs for the counts_gps single-cell data.
-#'
-#'
-#' @format A character vector with 500 cluster IDs
-#' @examples data(cell_gps)
-"cell_gps"
-
 #' Example PCA latent space
 #'
 #' Example PCA latent space associated with the counts_gps single-cell data.
@@ -45,15 +36,6 @@
 #' @examples data(true_prop_gps)
 "true_prop_gps"
 
-#' Example UMAP 2D embedding
-#'
-#' Example UMAP 2D embedding of the latent space (latent_gps).
-#'
-#'
-#' @format A matrix with 500 rows (cells) and 2 columns (UMAP)
-#' @examples data(umap_embedding_gps)
-"umap_embedding_gps"
-
 #' Variable genes
 #'
 #' 2,000 variable genes associated with the counts_gps single-cell data.
@@ -62,3 +44,12 @@
 #' @format A character vector containing 2,000 variable genes
 #' @examples data(variable_genes_gps)
 "variable_genes_gps"
+
+#' meta data for 'counts_gps', the single-cell RNA-seq data
+#'
+#' data frame that contains the UMAP coordinates of each cell and cluster IDs
+#'
+#'
+#' @format A data frame with 3 columns
+#' @examples data(meta_data_gps)
+"meta_data_gps"
