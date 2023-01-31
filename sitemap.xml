@@ -79,9 +79,6 @@
     <loc>/reference/bulk_gps.html</loc>
   </url>
   <url>
-    <loc>/reference/cell_gps.html</loc>
-  </url>
-  <url>
     <loc>/reference/counts_gps.html</loc>
   </url>
   <url>
@@ -91,6 +88,9 @@
     <loc>/reference/latent_gps.html</loc>
   </url>
   <url>
+    <loc>/reference/meta_data_gps.html</loc>
+  </url>
+  <url>
     <loc>/reference/set_zero.html</loc>
   </url>
   <url>
@@ -98,9 +98,6 @@
   </url>
   <url>
     <loc>/reference/true_prop_gps.html</loc>
-  </url>
-  <url>
-    <loc>/reference/umap_embedding_gps.html</loc>
   </url>
   <url>
     <loc>/reference/variable_genes_gps.html</loc>
