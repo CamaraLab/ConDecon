@@ -1,4 +1,47 @@
-url: ~
 template:
   bootstrap: 5
-
+  bootswatch: spacelab
+navbar:
+  structure:
+    left: [API, articles]
+    right: [search, github]
+  components:
+    API:
+      text: API
+      href: reference/index.html
+    github:
+      icon: fa-github
+      href: https://github.com/CamaraLab/ConDecon
+      aria-label: GitHub
+reference:
+- title: "Main Functions"
+  contents:
+    - RunConDecon
+    - PlotConDecon
+    - TransferFeatures
+    - BuildTrainingSet
+    - Map2Latent
+    - BuildModel
+    - PredictCellProb
+    - CalcRelativeCellProb
+- title: "Example data"
+  contents:
+    - counts_gps
+    - latent_gps
+    - variable_genes_gps
+    - meta_data_gps
+    - bulk_gps
+    - true_prop_gps
+- title: "internal"
+  contents:
+    - BulkCells
+    - BulkCells_subfxn
+    - CellProb
+    - CorBulk
+    - Find_Sigma
+    - GeneIndex
+    - GeneIndex_subfxn
+    - MultiVarFit
+    - PickCells
+    - set_zero
+    - smooth_cell_prob
