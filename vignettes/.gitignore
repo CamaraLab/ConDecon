@@ -1,2 +1,6 @@
 *.html
 *.R
+^\Other_ATAC_Figs$
+^\Other_Bcells_Figs$
+^\Other_Intro_Figs$
+^\Other_Spatial_Figs$
