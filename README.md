@@ -37,10 +37,10 @@ A complete guide of ConDecon's tutorials and API is available [here](https://cam
 
 #### Tutorials
 
--   Tutorial applying ConDecon to simulated transcriptomic data: [Quick set up and example](https://camaralab.github.io/ConDecon/articles/Intro_to_ConDecon.html)
--   Tutorial applying ConDecon to B-cells from scRNA-seq data: [B-cells example](https://camaralab.github.io/ConDecon/articles/B_cells_RNA.html)
--   Tutorial applying ConDecon spatial transcriptomic data: [Spatial RNA example](https://camaralab.github.io/ConDecon/articles/Spatial_RNA.html)
--   Tutorial applying ConDecon to chromatin accessibility data: [ATAC example](https://camaralab.github.io/ConDecon/articles/Chromatin_Accessibility_Data.html)
+-   Tutorial applying ConDecon to simulated transcriptomic data: [Quick set up and example](https://camaralab.github.io/ConDecon/articles/a1_Intro_to_ConDecon.html)
+-   Tutorial applying ConDecon to B-cells from scRNA-seq data: [B-cells example](https://camaralab.github.io/ConDecon/articles/a2_B_cell_RNA.html)
+-   Tutorial applying ConDecon spatial transcriptomic data: [Spatial RNA example](https://camaralab.github.io/ConDecon/articles/a3_Spatial_RNA.html)
+-   Tutorial applying ConDecon to chromatin accessibility data: [ATAC example](https://camaralab.github.io/ConDecon/articles/a4_Chromatin_Accessibility_Data.html)
 
 #### API Reference
 
