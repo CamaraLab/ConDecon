@@ -87,14 +87,16 @@
 <div class="section level1">
 <div class="page-header"><h1 id="condecon">ConDecon<a class="anchor" aria-label="anchor" href="#condecon"></a>
 </h1></div>
-<p><code>ConDecon</code> is a clustering-independent deconvolution method for estimating cell abundances in bulk tissues using single-cell RNA-seq data. The aim of ConDecon is to infer a probability distribution across a reference single-cell RNA-seq data that represents the likelihood for each cell in the reference data to be present in the query bulk tissue. To that end, ConDecon requires three inputs:</p>
+<p><code>ConDecon</code> is a clustering-independent deconvolution method for estimating cell abundances in bulk tissues using single-cell RNA-seq data. The aim of ConDecon is to infer a probability distribution across a reference single-cell RNA-seq dataset that represents the likelihood for each cell in the reference data to be present in the query bulk tissue. To that end, ConDecon requires three inputs:</p>
 <ul>
 <li>Single-cell gene expression count data</li>
 <li>Single-cell latent space</li>
 <li>Normalized bulk data</li>
 </ul>
 <p>With this information, ConDecon learns a relationship that explains the similarity between the gene expression profile of bulk and single-cell data as a function of changes in cell abundances, without relying on cluster labels or cell-type specific gene expression signatures at any step. ConDecon enables previously elusive analyses of dynamic cellular processes in bulk tissues and represents an increase in functionality and phenotypic resolution with respect to current methods for gene expression deconvolution. Additionally, ConDecon can be applied to other omics data modalities including spatial transcriptomics and chromatin accessibility data. Overall, we anticipate that these features will improve our understanding of tissue cell composition by facilitating the inference of cell state abundances within complex bulk tissues, particularly in the context of evolving systems like development and disease progression.</p>
-<p>Aubin, R. G., Montelongo, J., Hu, R., Camara, P. G. <em>Clustering-independent estimation of cell abundances in bulk tissue using single-cell RNA-seq. data</em>. <strong>In preperation</strong> (2023).</p>
+<ul>
+<li>Aubin, R. G., Montelongo, J., Hu, R., Camara, P. G. <em>Clustering-independent estimation of cell abundances in bulk tissue using single-cell RNA-seq data</em>. <strong>Biorxiv</strong> (2023).</li>
+</ul>
 <p align="center">
 <img src="reference/figures/Method_Overview.png" width="70%"></p>
 <div class="section level2">
@@ -104,7 +106,7 @@
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ConDecon)</span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="table-of-contents">Table of Contents<a class="anchor" aria-label="anchor" href="#table-of-contents"></a>
+<h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
 </h2>
 <p>A complete guide of ConDecon’s tutorials and API is available <a href="https://camaralab.github.io/ConDecon/index.html" class="external-link">here</a>.</p>
 <div class="section level4">
