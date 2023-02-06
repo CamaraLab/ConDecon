@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 ```
 
 
-ConDecon's general approach for estimating cell abundances can be applied to other omics data modalities such as spatial transcriptomics. In this tutorial, we will apply ConDecon to stereo-seq and single-cell RNA-seq data of 10 zebrafish embryos profiled 3.3 hours post-fertilization ([Lui et al, Developmental Cell, 2022](https://doi.org/10.1016/j.devcel.2022.04.009)). For convenience, the data associated with this tutorial is available on Zenodo.
+ConDecon's general approach for estimating cell abundances can be applied to other omics data modalities such as spatial transcriptomics. In this tutorial, we will apply ConDecon to stereo-seq and single-cell RNA-seq data of 10 zebrafish embryos profiled 3.3 hours post-fertilization ([Lui et al, Developmental Cell, 2022](https://doi.org/10.1016/j.devcel.2022.04.009)). For convenience, the data associated with this tutorial is available on [Zenodo](https://zenodo.org/record/7604026#.Y-EzEC_MIuU).
 
 ```{r, eval=FALSE}
 library(ConDecon)
@@ -91,7 +91,7 @@ PlotConDecon(ConDecon_obj,
              samples = c("DNB_3795_15810", "DNB_3945_15525", "DNB_4080_15600"))
 ```
 ```{r, echo=FALSE, out.width="900px"}
-knitr::include_graphics("a3_Spatial_CellProb_3examples_smaller.png")
+knitr::include_graphics("a3_Spatial_CellProb_3examples.png")
 ```
 
 ```{r, eval=FALSE}
