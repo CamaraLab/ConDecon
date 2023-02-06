@@ -171,6 +171,7 @@ CalcRelativeCellProb <- function(ConDecon_obj,
 
   #Order list of lists in ConDecon object
   ConDecon_obj <- ConDecon_obj[c("Normalized_cell.prob", "Relative_cell.prob", "PredictCellProb", "Model", "TrainingSet")]
+  class(ConDecon_obj) <- "ConDecon"
   return(ConDecon_obj)
 }
 
