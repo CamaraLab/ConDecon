@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 ```
 
 
-ConDecon's general approach for estimating cell abundances can be applied to other omics data modalities such as chromatin accessibility data. In this tutorial, we will apply ConDecon to bulk and single-cell ATAC-seq data from patient-derived melanoma cell cultures where the SOX10 transcription factor was knocked down by siRNA. Cells were then sampled for sequencing at 0, 24, 48, and 72 hours after SOX10 knockdown ([Bravo González-Blas et al, Nature Methods, 2018](https://doi.org/10.1038/s41592-019-0367-1)). For convenience, the processed data associated with this tutorial is available on Zenodo.
+ConDecon's general approach for estimating cell abundances can be applied to other omics data modalities such as chromatin accessibility data. In this tutorial, we will apply ConDecon to bulk and single-cell ATAC-seq data from patient-derived melanoma cell cultures where the SOX10 transcription factor was knocked down by siRNA. Cells were then sampled for sequencing at 0, 24, 48, and 72 hours after SOX10 knockdown ([Bravo González-Blas et al, Nature Methods, 2018](https://doi.org/10.1038/s41592-019-0367-1)). For convenience, the processed data associated with this tutorial is available on [Zenodo](https://zenodo.org/record/7604026#.Y-EzEC_MIuU).
 
 Note: To apply ConDecon to chromatin accessibility data, the bulk and single-cell ATAC-seq data must contain a common set of peaks. We created this by binning the genome into non-overlapping 10KB bins and aggregating the peaks from the single-cell and bulk ATAC-seq data into those bins.
 
