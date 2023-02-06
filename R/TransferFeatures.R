@@ -30,34 +30,38 @@ TransferFeatures <- function(ConDecon_obj,
 
   #Use invisible() to capture user's original name for feature
   invisible(paste0("Transferring ", feature_name, "... \n"))
+
   if(!inherits(ConDecon_obj, what = "ConDecon")){
     message("ConDecon_obj must be an object with class 'ConDecon' output from RunConDecon")
-    return(NULL)
+    return(ConDecon_obj)
   }
+
+  if(is.null(ConDecon_obj$TransferFeatures)){
+    ConDecon_obj$TransferFeatures <- NULL
+  }
+
   if(!is.vector(feature)){
     message("feature must be a vector")
-    return(NULL)
+    return(ConDecon_obj)
   }
   if(length(feature) != nrow(ConDecon_obj$Normalized_cell.prob)){
     message("The length of 'feature' must be equal to the number of cells in the\n
             reference single-cell data")
-    return(NULL)
+    return(ConDecon_obj)
   }
   if(is.null(names(feature))){
     names(feature) <- rownames(ConDecon_obj$Normalized_cell.prob)
   } else if(sum(names(feature) %in% row.names(ConDecon_obj$Normalized_cell.prob)) != nrow(ConDecon_obj$Normalized_cell.prob)){
     message("Names of 'feature' must be the column/cell names in the reference single-cell data")
-    return(NULL)
+    return(ConDecon_obj)
   } else {
     feature = feature[row.names(ConDecon_obj$Normalized_cell.prob)]
   }
-  if(is.null(ConDecon_obj$TransferFeatures)){
-    ConDecon_obj$TransferFeatures <- NULL
-  }
+
   ## If feature is calculated for a subset of the cells, remove cell with NA
   if(sum(is.na(feature)) == length(feature)){
     message("'feature' only contains NA values")
-    return(NULL)
+    return(ConDecon_obj)
   } else if(sum(is.na(feature))>0){
     Normalized_cell.prob <- ConDecon_obj$Normalized_cell.prob[!is.na(feature),]
     feature <- feature[!is.na(feature)]
