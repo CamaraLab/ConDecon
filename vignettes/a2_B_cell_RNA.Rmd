@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 ```
 
 
-In this tutorial, we will use ConDecon to study changes in single-cell abundance associated with continuous cellular processes. We will consider single-cell and bulk RNA-seq data from the bone marrow of mice ages 1-27months ([Tabula Muris Consortium](https://doi.org/10.1038/s41586-020-2496-1)) and used these data to study changes in cell abundance associated with development and aging. We are particularly interested in well-characterized changes in B-cell abundance that occur during postnatal development. For convenience, the processed data associated with this tutorial is available on Zenodo.
+In this tutorial, we will use ConDecon to study changes in single-cell abundance associated with continuous cellular processes. We will consider single-cell and bulk RNA-seq data from the bone marrow of mice ages 1-27months ([Tabula Muris Consortium](https://doi.org/10.1038/s41586-020-2496-1)) and used these data to study changes in cell abundance associated with development and aging. We are particularly interested in well-characterized changes in B-cell abundance that occur during postnatal development. For convenience, the processed data associated with this tutorial is available on [Zenodo](https://zenodo.org/record/7604026#.Y-EzEC_MIuU).
 
 
 ```{r, eval=FALSE}
