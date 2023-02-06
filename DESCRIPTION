@@ -1,5 +1,5 @@
 Package: ConDecon
-Title: Clustering-independent estimation of cell abundances in bulk tissue using single-cell RNA-seq data.
+Title: Clustering-independent estimation of cell abundances in bulk tissue using single-cell RNA-seq data
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Rachael",
