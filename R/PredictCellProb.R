@@ -26,7 +26,8 @@
 PredictCellProb <- function(bulk,
                             count,
                             variable.features,
-                            output){
+                            output,
+                            k = 1){
 
   #Variable features must be located in bulk AND single-cell data
   counts_genes <- unique(match(row.names(bulk), row.names(count)))
@@ -39,15 +40,9 @@ PredictCellProb <- function(bulk,
                                                                                variable.features)))
   which_features <- which_features[!is.na(which_features)]
   variable.features <- variable.features[which_features]
-
-  #Find k=5 nearest neighbors of each cell
-  k <- 5
-  knn <- t(apply(output$TrainingSet$latent_distance, 1, function(i){
-    order(i, decreasing = F)[1:k]
-  }))
-
+  
   #Infer bulk coefficients
-  gene.index <- GeneIndex(knn, count, variable.features)
+  gene.index <- GeneIndex(output$TrainingSet$knn, count, variable.features, k)
   bulk_nn <- CorBulk(bulk, variable.features, gene.index)
   bulk.coef <- stats::lm(bulk_nn ~ output$TrainingSet$latent + 0)$coefficients
   bulk.coef <- as.matrix(bulk.coef)

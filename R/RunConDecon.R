@@ -47,7 +47,8 @@ RunConDecon <- function(counts,
                       trainingset = NULL,
                       sigma_min_cells = NULL,
                       sigma_max_cells = NULL,
-                      verbose = FALSE){
+                      verbose = FALSE,
+                      k = 1){
 
 
   ### CHECK INPUT ###
@@ -170,7 +171,7 @@ RunConDecon <- function(counts,
   if(verbose == TRUE){
     message("Map2Latent")
   }
-  output <- Map2Latent(output, latent, counts, bulk, variable.features)
+  output <- Map2Latent(output, latent, counts, bulk, variable.features, k)
 
   if(verbose == TRUE){
     message("BuildModel")
@@ -180,7 +181,7 @@ RunConDecon <- function(counts,
   if(verbose == TRUE){
     message("PredictCellProb")
   }
-  output <- PredictCellProb(bulk, counts, variable.features, output)
+  output <- PredictCellProb(bulk, counts, variable.features, output, k)
 
   #Calc Relative cell probability
   output <- CalcRelativeCellProb(output)
