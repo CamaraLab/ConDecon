@@ -52,18 +52,13 @@ PredictCellProb <- function(bulk,
   bulk.coef <- stats::lm(bulk_nn ~ output$TrainingSet$latent + 0)$coefficients
   bulk.coef <- as.matrix(bulk.coef)
 
-  #predict() needs at least 2 cases to predict
-  if (ncol(bulk.coef) == 1){
-    bulk.coef <- cbind(bulk.coef, 0)
-  }
-
   row.names(bulk.coef) <- paste0("x",1:ncol(output$TrainingSet$latent))
   output$PredictCellProb$bulk_coefficients <- data.frame(t(bulk.coef))
 
   #Infer cell prob coefficients
   output$PredictCellProb$cell.prob_coefficients <- NULL
   for (j in 1:length(output$Model)){
-    tmp <- stats::predict(output$Model[[j]], output$PredictCellProb$bulk_coefficients)
+    tmp <- stats::predict(output$Model[[j]], data.frame(output$PredictCellProb$bulk_coefficients))
     output$PredictCellProb$cell.prob_coefficients <- rbind(output$PredictCellProb$cell.prob_coefficients, tmp)
   }
 
