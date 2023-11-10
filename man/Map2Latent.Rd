@@ -4,7 +4,7 @@
 \alias{Map2Latent}
 \title{Map2Latent}
 \usage{
-Map2Latent(TrainingSet, latent, count, bulk, variable.features)
+Map2Latent(TrainingSet, latent, count, bulk, variable.features, k = 1)
 }
 \arguments{
 \item{TrainingSet}{Training set data (output from BuildTrainingSet)}
@@ -16,6 +16,8 @@ Map2Latent(TrainingSet, latent, count, bulk, variable.features)
 \item{bulk}{matrix of query bulk data (features x samples)}
 
 \item{variable.features}{character vector of variable features}
+
+\item{k}{Number of nearest neighbor cells aggregated together when calculating rank correlation}
 }
 \value{
 ConDecon object with low dimensional embedding of the space

@@ -6,6 +6,7 @@
 #' @param count single-cell count matrix (features x cells)
 #' @param variable.features character vector of the most variable features
 #' @param output ConDecon object with fit model
+#' @param k Number of nearest neighbor cells aggregated together when calculating rank correlation
 #'
 #' @return ConDecon object with inferred cell probabilities for each query bulk sample
 #' @export

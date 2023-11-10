@@ -4,7 +4,7 @@
 \alias{GeneIndex}
 \title{GeneIndex}
 \usage{
-GeneIndex(knn, count, variable.features)
+GeneIndex(knn, count, variable.features, k)
 }
 \arguments{
 \item{knn}{Matrix of cells with their nearest neighbor}
@@ -12,6 +12,8 @@ GeneIndex(knn, count, variable.features)
 \item{count}{Matrix of single-cell count data}
 
 \item{variable.features}{Character vector of variable features from single-cell data}
+
+\item{k}{Number of nearest neighbor cells aggregated together when calculating rank correlation}
 }
 \value{
 Matrix of rank indices for variable features ordered by expression

@@ -7,6 +7,7 @@
 #' @param count single-cell count matrix (features x cells)
 #' @param bulk matrix of query bulk data (features x samples)
 #' @param variable.features character vector of variable features
+#' @param k Number of nearest neighbor cells aggregated together when calculating rank correlation
 #'
 #' @return ConDecon object with low dimensional embedding of the space
 #' of cell abundances and correlations
@@ -79,6 +80,7 @@ Map2Latent <- function(TrainingSet,
 #' @param knn Matrix of cells with their nearest neighbor
 #' @param count Matrix of single-cell count data
 #' @param variable.features Character vector of variable features from single-cell data
+#' @param k Number of nearest neighbor cells aggregated together when calculating rank correlation
 #'
 #' @return Matrix of rank indices for variable features ordered by expression
 GeneIndex <- function(knn,count,variable.features, k){

@@ -20,6 +20,7 @@
 #' @param sigma_max_cells max number of cells that should be captured by the standard
 #' deviation of the Gaussian
 #' @param verbose logical indicating whether to print progress (default = FALSE)
+#' @param k Number of nearest neighbor cells aggregated together when calculating rank correlation
 #'
 #' @return ConDecon object with continuous deconvolution results
 #' @export

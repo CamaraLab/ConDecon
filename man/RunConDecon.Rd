@@ -19,7 +19,8 @@ RunConDecon(
   trainingset = NULL,
   sigma_min_cells = NULL,
   sigma_max_cells = NULL,
-  verbose = FALSE
+  verbose = FALSE,
+  k = 1
 )
 }
 \arguments{
@@ -55,6 +56,8 @@ deviation of the Gaussian}
 deviation of the Gaussian}
 
 \item{verbose}{logical indicating whether to print progress (default = FALSE)}
+
+\item{k}{Number of nearest neighbor cells aggregated together when calculating rank correlation}
 }
 \value{
 ConDecon object with continuous deconvolution results
