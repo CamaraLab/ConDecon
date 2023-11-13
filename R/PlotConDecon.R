@@ -8,6 +8,9 @@
 #' @param pt.size size of the points plotted (default = 1)
 #' @param cells Vector of cells from the reference single-cell data to plot (default = NULL, plot all cells)
 #' @param title_names Title of each plot (default = samples, use NULL for no title)
+#' @param relative Logical indicating whether to plot the relative abundance (Z-scores) or the raw abundance (default = TRUE)
+#' @param upper_quant When relative = FALSE, plot the raw abundance removing the upper quartile or the long tails of the distribution (default = 0.95)
+#' @param lower_quant When relative = FALSE, plot the raw abundance removing the lower quartile or the long tails of the distribution (default = 0.05)
 #'
 #' @return Plot the z-score cell probability values for each query bulk sample
 #' @export
@@ -29,7 +32,10 @@ PlotConDecon <- function(ConDecon_obj,
                          samples = NULL,
                          pt.size = 1,
                          cells = NULL,
-                         title_names = samples){
+                         title_names = samples,
+                         relative = TRUE,
+                         upper_quant = 0.95,
+                         lower_quant = 0.05){
 
   umap <- data.frame(Dim_1 = umap[,1], Dim_2 = umap[,2], row.names = row.names(umap))
 
@@ -108,16 +114,33 @@ PlotConDecon <- function(ConDecon_obj,
     message("'cells' must be a vector")
     return(NULL)
   }
-
-  for (i in samples){
-    Dim_1 <- Dim_2 <- NULL # Setting the variables to NULL to appease R-CMD-check
-    #https://stackoverflow.com/questions/9439256/how-can-i-handle-r-cmd-check-no-visible-binding-for-global-variable-notes-when
-    ##scale_color_gradient2(low = "blue", high = "red", mid = "gray")
-    graphics::plot(ggplot2::ggplot(umap[cells,], ggplot2::aes(x=Dim_1, y=Dim_2, color = ConDecon_obj$Relative_cell.prob[cells, i])) +
-                     ggplot2::geom_point(size = pt.size) +
-                     ggplot2::scale_color_gradient2(low = "#011F5B", high = "#990000", mid = "light gray") +
-                     ggplot2::labs(color = "Cell Prob\nz-score", title = ifelse(is.null(title_names), "", title_names[as.character(i)])) +
-                     ggplot2::theme_classic())
+  
+  if(relative){
+    for (i in samples){
+      Dim_1 <- Dim_2 <- NULL # Setting the variables to NULL to appease R-CMD-check
+      #https://stackoverflow.com/questions/9439256/how-can-i-handle-r-cmd-check-no-visible-binding-for-global-variable-notes-when
+      ##scale_color_gradient2(low = "blue", high = "red", mid = "gray")
+      graphics::plot(ggplot2::ggplot(umap[cells,], ggplot2::aes(x=Dim_1, y=Dim_2, color = ConDecon_obj$Relative_cell.prob[cells, i])) +
+                       ggplot2::geom_point(size = pt.size) +
+                       ggplot2::scale_color_gradient2(low = "#011F5B", high = "#990000", mid = "light gray") +
+                       ggplot2::labs(color = "Cell Prob\nz-score", title = ifelse(is.null(title_names), "", title_names[as.character(i)])) +
+                       ggplot2::theme_classic())
+    }
+  } else{
+    for (i in samples){
+      Dim_1 <- Dim_2 <- NULL # Setting the variables to NULL to appease R-CMD-check
+      #https://stackoverflow.com/questions/9439256/how-can-i-handle-r-cmd-check-no-visible-binding-for-global-variable-notes-when
+      ##scale_color_gradient2(low = "blue", high = "red", mid = "gray")
+      norm_cell_prob <- ConDecon_obj$Normalized_cell.prob
+      norm_cell_prob[norm_cell_prob < quantile(as.vector(ConDecon_obj$Normalized_cell.prob), probs = lower_quant)] <- quantile(as.vector(ConDecon_obj$Normalized_cell.prob), probs = lower_quant)
+      norm_cell_prob[norm_cell_prob > quantile(as.vector(ConDecon_obj$Normalized_cell.prob), probs = upper_quant)] <- quantile(as.vector(ConDecon_obj$Normalized_cell.prob), probs = upper_quant)
+      norm_cell_prob <- t(t(norm_cell_prob)/colSums(norm_cell_prob))
+      graphics::plot(ggplot2::ggplot(umap[cells,], ggplot2::aes(x=Dim_1, y=Dim_2, color = norm_cell_prob[cells, i])) +
+                       ggplot2::geom_point(size = pt.size) +
+                       ggplot2::scale_color_gradient2(low = "#011F5B", high = "#990000", mid = "light gray", midpoint = median(as.vector(norm_cell_prob))) +
+                       ggplot2::labs(color = "Cell Prob", title = ifelse(is.null(title_names), "", title_names[as.character(i)])) +
+                       ggplot2::theme_classic())
+    }
   }
 
   invisible(ConDecon_obj)
