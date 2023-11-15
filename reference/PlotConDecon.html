@@ -63,7 +63,10 @@
 <span>  samples <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  pt.size <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  cells <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  title_names <span class="op">=</span> <span class="va">samples</span></span>
+<span>  title_names <span class="op">=</span> <span class="va">samples</span>,</span>
+<span>  relative <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  upper_quant <span class="op">=</span> <span class="fl">0.95</span>,</span>
+<span>  lower_quant <span class="op">=</span> <span class="fl">0.05</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -91,6 +94,18 @@
 
 <dt>title_names</dt>
 <dd><p>Title of each plot (default = samples, use NULL for no title)</p></dd>
+
+
+<dt>relative</dt>
+<dd><p>Logical indicating whether to plot the relative abundance (Z-scores) or the raw abundance (default = TRUE)</p></dd>
+
+
+<dt>upper_quant</dt>
+<dd><p>When relative = FALSE, plot the raw abundance removing the upper quartile or the long tails of the distribution (default = 0.95)</p></dd>
+
+
+<dt>lower_quant</dt>
+<dd><p>When relative = FALSE, plot the raw abundance removing the lower quartile or the long tails of the distribution (default = 0.05)</p></dd>
 
 </dl></div>
     <div class="section level2">

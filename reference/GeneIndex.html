@@ -57,7 +57,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">GeneIndex</span><span class="op">(</span><span class="va">knn</span>, <span class="va">count</span>, <span class="va">variable.features</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">GeneIndex</span><span class="op">(</span><span class="va">knn</span>, <span class="va">count</span>, <span class="va">variable.features</span>, <span class="va">k</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -72,6 +72,10 @@
 
 <dt>variable.features</dt>
 <dd><p>Character vector of variable features from single-cell data</p></dd>
+
+
+<dt>k</dt>
+<dd><p>Number of nearest neighbor cells aggregated together when calculating rank correlation</p></dd>
 
 </dl></div>
     <div class="section level2">

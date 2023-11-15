@@ -72,7 +72,8 @@
 <span>  trainingset <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  sigma_min_cells <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  sigma_max_cells <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  k <span class="op">=</span> <span class="fl">1</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -139,6 +140,10 @@ deviation of the Gaussian</p></dd>
 
 <dt>verbose</dt>
 <dd><p>logical indicating whether to print progress (default = FALSE)</p></dd>
+
+
+<dt>k</dt>
+<dd><p>Number of nearest neighbor cells aggregated together when calculating rank correlation</p></dd>
 
 </dl></div>
     <div class="section level2">
