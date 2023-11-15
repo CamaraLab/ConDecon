@@ -4,7 +4,7 @@
 \alias{PredictCellProb}
 \title{PredictCellProb}
 \usage{
-PredictCellProb(bulk, count, variable.features, output)
+PredictCellProb(bulk, count, variable.features, output, k = 1)
 }
 \arguments{
 \item{bulk}{matrix of the query bulk data (features x samples)}
@@ -14,6 +14,8 @@ PredictCellProb(bulk, count, variable.features, output)
 \item{variable.features}{character vector of the most variable features}
 
 \item{output}{ConDecon object with fit model}
+
+\item{k}{Number of nearest neighbor cells aggregated together when calculating rank correlation}
 }
 \value{
 ConDecon object with inferred cell probabilities for each query bulk sample

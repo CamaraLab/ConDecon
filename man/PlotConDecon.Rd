@@ -10,7 +10,10 @@ PlotConDecon(
   samples = NULL,
   pt.size = 1,
   cells = NULL,
-  title_names = samples
+  title_names = samples,
+  relative = TRUE,
+  upper_quant = 0.95,
+  lower_quant = 0.05
 )
 }
 \arguments{
@@ -25,6 +28,12 @@ PlotConDecon(
 \item{cells}{Vector of cells from the reference single-cell data to plot (default = NULL, plot all cells)}
 
 \item{title_names}{Title of each plot (default = samples, use NULL for no title)}
+
+\item{relative}{Logical indicating whether to plot the relative abundance (Z-scores) or the raw abundance (default = TRUE)}
+
+\item{upper_quant}{When relative = FALSE, plot the raw abundance removing the upper quartile or the long tails of the distribution (default = 0.95)}
+
+\item{lower_quant}{When relative = FALSE, plot the raw abundance removing the lower quartile or the long tails of the distribution (default = 0.05)}
 }
 \value{
 Plot the z-score cell probability values for each query bulk sample

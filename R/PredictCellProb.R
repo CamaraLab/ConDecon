@@ -6,6 +6,7 @@
 #' @param count single-cell count matrix (features x cells)
 #' @param variable.features character vector of the most variable features
 #' @param output ConDecon object with fit model
+#' @param k Number of nearest neighbor cells aggregated together when calculating rank correlation
 #'
 #' @return ConDecon object with inferred cell probabilities for each query bulk sample
 #' @export
@@ -26,7 +27,8 @@
 PredictCellProb <- function(bulk,
                             count,
                             variable.features,
-                            output){
+                            output,
+                            k = 1){
 
   #Variable features must be located in bulk AND single-cell data
   counts_genes <- unique(match(row.names(bulk), row.names(count)))
@@ -39,23 +41,12 @@ PredictCellProb <- function(bulk,
                                                                                variable.features)))
   which_features <- which_features[!is.na(which_features)]
   variable.features <- variable.features[which_features]
-
-  #Find k=5 nearest neighbors of each cell
-  k <- 5
-  knn <- t(apply(output$TrainingSet$latent_distance, 1, function(i){
-    order(i, decreasing = F)[1:k]
-  }))
-
+  
   #Infer bulk coefficients
-  gene.index <- GeneIndex(knn, count, variable.features)
+  gene.index <- GeneIndex(output$TrainingSet$knn, count, variable.features, k)
   bulk_nn <- CorBulk(bulk, variable.features, gene.index)
   bulk.coef <- stats::lm(bulk_nn ~ output$TrainingSet$latent + 0)$coefficients
   bulk.coef <- as.matrix(bulk.coef)
-
-  #predict() needs at least 2 cases to predict
-  if (ncol(bulk.coef) == 1){
-    bulk.coef <- cbind(bulk.coef, 0)
-  }
 
   row.names(bulk.coef) <- paste0("x",1:ncol(output$TrainingSet$latent))
   output$PredictCellProb$bulk_coefficients <- data.frame(t(bulk.coef))
@@ -63,7 +54,7 @@ PredictCellProb <- function(bulk,
   #Infer cell prob coefficients
   output$PredictCellProb$cell.prob_coefficients <- NULL
   for (j in 1:length(output$Model)){
-    tmp <- stats::predict(output$Model[[j]], output$PredictCellProb$bulk_coefficients)
+    tmp <- stats::predict(output$Model[[j]], data.frame(output$PredictCellProb$bulk_coefficients))
     output$PredictCellProb$cell.prob_coefficients <- rbind(output$PredictCellProb$cell.prob_coefficients, tmp)
   }
 

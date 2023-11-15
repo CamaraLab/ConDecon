@@ -7,6 +7,7 @@
 #' @param count single-cell count matrix (features x cells)
 #' @param bulk matrix of query bulk data (features x samples)
 #' @param variable.features character vector of variable features
+#' @param k Number of nearest neighbor cells aggregated together when calculating rank correlation
 #'
 #' @return ConDecon object with low dimensional embedding of the space
 #' of cell abundances and correlations
@@ -27,7 +28,8 @@ Map2Latent <- function(TrainingSet,
                        latent,
                        count,
                        bulk,
-                       variable.features){
+                       variable.features,
+                       k = 1){
 
   #Variable features must be located in bulk AND single-cell data
   counts_genes <- unique(match(row.names(bulk), row.names(count)))
@@ -49,14 +51,17 @@ Map2Latent <- function(TrainingSet,
     stats::lm(TrainingSet$TrainingSet$cell.prob ~ TrainingSet$TrainingSet$latent + 0)$coefficients
 
   #Find index of KNN for dist matrix
-  k <- 5
-  knn <- t(apply(TrainingSet$TrainingSet$latent_distance, 1, function(i){
+  knn <- as.matrix(apply(TrainingSet$TrainingSet$latent_distance, 1, function(i){
     order(i, decreasing = F)[1:k]
   }))
-
+  
+  if(k > 1){
+    knn <- t(knn)
+  }
+  TrainingSet$TrainingSet$knn <- knn
   #Find the index of the variable features in each cell when ordered by expression
   #(averaged over its 5 nearest neighbors)
-  gene.index <- GeneIndex(knn, count, variable.features)
+  gene.index <- GeneIndex(knn, count, variable.features, k = k)
 
   #Correlation btwn synthetic bulk and single-cell data
   TrainingSet$TrainingSet$bulk_nn <-
@@ -75,21 +80,23 @@ Map2Latent <- function(TrainingSet,
 #' @param knn Matrix of cells with their nearest neighbor
 #' @param count Matrix of single-cell count data
 #' @param variable.features Character vector of variable features from single-cell data
+#' @param k Number of nearest neighbor cells aggregated together when calculating rank correlation
 #'
 #' @return Matrix of rank indices for variable features ordered by expression
-GeneIndex <- function(knn,count,variable.features){
+GeneIndex <- function(knn,count,variable.features, k){
 
   knn.index <- tidyr::gather(as.data.frame(t(knn)))
   knn.index$new_key <- match(knn.index$key,row.names(knn))
   #colSums of knn.index will sum to k (the number of nearest neighbors per cell)
   #cells by cells matrix
+  
   knn.index <- Matrix::sparseMatrix(i = knn.index$value, j = knn.index$new_key, dims = c(dim(knn)[1],
                                                                                          dim(knn)[1]))
   #normalize the count data before summing counts across cells
   norm_count <- t(t(count)/colSums(count))*10000
   #transform knn.index such that each column is the average expression of the the cell's nearest neighbors
   #genes by cell matrix
-  count_nn <- (norm_count %*% knn.index)/5
+  count_nn <- (norm_count %*% knn.index)/k
   #genes_ID is the index of variable genes within the rownames of count_nn
   genes_id <- match(variable.features, row.names(count_nn))
   gene.index <- apply(count_nn, 2, GeneIndex_subfxn, geneID=genes_id)

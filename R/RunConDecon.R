@@ -20,6 +20,7 @@
 #' @param sigma_max_cells max number of cells that should be captured by the standard
 #' deviation of the Gaussian
 #' @param verbose logical indicating whether to print progress (default = FALSE)
+#' @param k Number of nearest neighbor cells aggregated together when calculating rank correlation
 #'
 #' @return ConDecon object with continuous deconvolution results
 #' @export
@@ -47,7 +48,8 @@ RunConDecon <- function(counts,
                       trainingset = NULL,
                       sigma_min_cells = NULL,
                       sigma_max_cells = NULL,
-                      verbose = FALSE){
+                      verbose = FALSE,
+                      k = 1){
 
 
   ### CHECK INPUT ###
@@ -170,7 +172,7 @@ RunConDecon <- function(counts,
   if(verbose == TRUE){
     message("Map2Latent")
   }
-  output <- Map2Latent(output, latent, counts, bulk, variable.features)
+  output <- Map2Latent(output, latent, counts, bulk, variable.features, k)
 
   if(verbose == TRUE){
     message("BuildModel")
@@ -180,7 +182,7 @@ RunConDecon <- function(counts,
   if(verbose == TRUE){
     message("PredictCellProb")
   }
-  output <- PredictCellProb(bulk, counts, variable.features, output)
+  output <- PredictCellProb(bulk, counts, variable.features, output, k)
 
   #Calc Relative cell probability
   output <- CalcRelativeCellProb(output)
