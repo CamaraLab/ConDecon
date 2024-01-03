@@ -190,5 +190,7 @@ RunConDecon <- function(counts,
   #Order list of lists in ConDecon object
   output <- output[c("Normalized_cell.prob", "Relative_cell.prob", "PredictCellProb", "Model", "TrainingSet")]
   class(output) = "ConDecon"
+
+  output = ComputeProximityScore(output)
   return(output)
 }
