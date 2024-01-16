@@ -24,6 +24,7 @@ reference:
     - BuildModel
     - PredictCellProb
     - CalcRelativeCellProb
+    - ComputeProximityScore
 - title: "Example data"
   contents:
     - counts_gps
