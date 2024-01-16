@@ -16,7 +16,7 @@ Description: ConDecon is a clustering-independent deconvolution method for
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.0
 Depends:
     R (>= 2.10)
 Imports:
@@ -26,6 +26,7 @@ Imports:
     Matrix,
     matrixStats,
     methods,
+    pdist,
     plyr,
     stats,
     tidyr
