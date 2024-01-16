@@ -90,6 +90,7 @@ z-score_i = (ConDecon_obj$Normalized_cell.prob[,i] - rowMeans(ConDecon_obj$Norma
 <span class="r-in"><span><span class="co"># For this example, we will reduce the training size to max.iter = 50 to reduce run time</span></span></span>
 <span class="r-in"><span><span class="va">ConDecon_obj</span> <span class="op">=</span> <span class="fu"><a href="RunConDecon.html">RunConDecon</a></span><span class="op">(</span>counts <span class="op">=</span> <span class="va">counts_gps</span>, latent <span class="op">=</span> <span class="va">latent_gps</span>, bulk <span class="op">=</span> <span class="va">bulk_gps</span>,</span></span>
 <span class="r-in"><span>variable.features <span class="op">=</span> <span class="va">variable_genes_gps</span>, max.iter <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Y is the same as X, did you mean to use dist instead?</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Recalc relative cell probability</span></span></span>
 <span class="r-in"><span><span class="va">ConDecon_obj</span> <span class="op">=</span> <span class="fu">CalcRelativeCellProb</span><span class="op">(</span><span class="va">ConDecon_obj</span><span class="op">)</span></span></span>

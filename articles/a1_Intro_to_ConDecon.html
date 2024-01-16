@@ -139,7 +139,10 @@ distributions.</p>
 <span>                           latent <span class="op">=</span> <span class="va">latent_gps</span>, </span>
 <span>                           variable.features <span class="op">=</span> <span class="va">variable_genes_gps</span>, </span>
 <span>                           bulk <span class="op">=</span> <span class="va">bulk_gps</span>, </span>
-<span>                           dims <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
+<span>                           dims <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in pdist::pdist(t(cond$TrainingSet$bulk_coefficients),</span></span>
+<span><span class="co">#&gt; t(cond$TrainingSet$bulk_coefficients)): Y is the same as X, did you mean to use</span></span>
+<span><span class="co">#&gt; dist instead?</span></span></code></pre></div>
 <p>With ‘PlotConDecon’, we can visualize the relative cell probabilities
 of each of the 5 bulk samples.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
