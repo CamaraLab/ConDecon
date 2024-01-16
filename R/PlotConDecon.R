@@ -137,7 +137,7 @@ PlotConDecon <- function(ConDecon_obj,
       norm_cell_prob <- t(t(norm_cell_prob)/colSums(norm_cell_prob))
       graphics::plot(ggplot2::ggplot(umap[cells,], ggplot2::aes(x=Dim_1, y=Dim_2, color = norm_cell_prob[cells, i])) +
                        ggplot2::geom_point(size = pt.size) +
-                       ggplot2::scale_color_gradient2(low = "#011F5B", high = "#990000", mid = "light gray", midpoint = median(as.vector(norm_cell_prob))) +
+                       ggplot2::scale_color_gradient2(low = "#011F5B", high = "#990000", mid = "light gray", midpoint = stats::median(as.vector(norm_cell_prob))) +
                        ggplot2::labs(color = "Cell Prob", title = ifelse(is.null(title_names), "", title_names[as.character(i)])) +
                        ggplot2::theme_classic())
     }
