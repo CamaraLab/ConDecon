@@ -1,5 +1,9 @@
 #' ComputeProximityScore
-#' @description Compute the average distance between the query dataset and the nearest 10 training datasets normalized by the average distance between training datasets
+#' @description Compute the average inverse distance between the query dataset and the nearest 10 training datasets
+#' normalized by the average distance between training datasets. This score is expected to range between 0 (for
+#' single-cell reference data unrelated to the query bulk data) and approximately 1 (for single-cell reference data
+#' that accurately match the query bulk data). the score depends on the parameters of CoDecon such as the number of
+#' training data points and therefore score comparisons should be performed for the same choice of parameters.
 #' @import pdist
 #' @import Matrix
 #' @param cond ConDecon object
@@ -26,7 +30,7 @@ ComputeProximityScore <- function(cond) {
     euclid_train[i[1],i[2:(k)]]
   }))
   
-  cond$proximity_score <- Matrix::rowMeans(knn_dist/mean(as.vector(knn_dist_train)))
+  cond$proximity_score <- Matrix::rowMeans(mean(as.vector(knn_dist_train))/knn_dist)
   
   return(cond)
 }
