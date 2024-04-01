@@ -2,7 +2,7 @@
 #' @description Compute the average inverse distance between the query dataset and the nearest 10 training datasets
 #' normalized by the average distance between training datasets. This score is expected to range between 0 (for
 #' single-cell reference data unrelated to the query bulk data) and approximately 1 (for single-cell reference data
-#' that accurately match the query bulk data). the score depends on the parameters of CoDecon such as the number of
+#' that accurately match the query bulk data). The score depends on the parameters of CoDecon such as the number of
 #' training data points and therefore score comparisons should be performed for the same choice of parameters.
 #' @import pdist
 #' @import Matrix
