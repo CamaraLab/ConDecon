@@ -64,7 +64,7 @@ PredictCellProb <- function(bulk,
 
   #normalize cell prob st cell prob sum to 1
   colmin <- apply(output$PredictCellProb$infer_cell.prob, 2, min)
-  cellprob_scale <- t(t(output$PredictCellProb$infer_cell.prob)+abs(colmin))
+  cellprob_scale <- t(t(output$PredictCellProb$infer_cell.prob)-colmin)
   output$Normalized_cell.prob = t(t(cellprob_scale)/colSums(cellprob_scale))
 
   return(output)
