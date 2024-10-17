@@ -1,111 +1,39 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>/articles/a1_Intro_to_ConDecon.html</loc>
-  </url>
-  <url>
-    <loc>/articles/a2_B_cell_RNA.html</loc>
-  </url>
-  <url>
-    <loc>/articles/a3_Spatial_RNA.html</loc>
-  </url>
-  <url>
-    <loc>/articles/a4_Chromatin_Accessibility_Data.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BuildModel.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BuildTrainingSet.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BulkCells.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BulkCells_subfxn.html</loc>
-  </url>
-  <url>
-    <loc>/reference/CalcRelativeCellProb.html</loc>
-  </url>
-  <url>
-    <loc>/reference/CellProb.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ComputeProximityScore.html</loc>
-  </url>
-  <url>
-    <loc>/reference/CorBulk.html</loc>
-  </url>
-  <url>
-    <loc>/reference/Find_Sigma.html</loc>
-  </url>
-  <url>
-    <loc>/reference/GeneIndex.html</loc>
-  </url>
-  <url>
-    <loc>/reference/GeneIndex_subfxn.html</loc>
-  </url>
-  <url>
-    <loc>/reference/Map2Latent.html</loc>
-  </url>
-  <url>
-    <loc>/reference/MultiVarFit.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PickCells.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PlotConDecon.html</loc>
-  </url>
-  <url>
-    <loc>/reference/PredictCellProb.html</loc>
-  </url>
-  <url>
-    <loc>/reference/RunConDecon.html</loc>
-  </url>
-  <url>
-    <loc>/reference/TransferFeatures.html</loc>
-  </url>
-  <url>
-    <loc>/reference/bulk_gps.html</loc>
-  </url>
-  <url>
-    <loc>/reference/counts_gps.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/latent_gps.html</loc>
-  </url>
-  <url>
-    <loc>/reference/meta_data_gps.html</loc>
-  </url>
-  <url>
-    <loc>/reference/set_zero.html</loc>
-  </url>
-  <url>
-    <loc>/reference/smooth_cell_prob.html</loc>
-  </url>
-  <url>
-    <loc>/reference/true_prop_gps.html</loc>
-  </url>
-  <url>
-    <loc>/reference/variable_genes_gps.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/LICENSE.html</loc></url>
+<url><loc>/articles/a1_Intro_to_ConDecon.html</loc></url>
+<url><loc>/articles/a2_B_cell_RNA.html</loc></url>
+<url><loc>/articles/a3_Spatial_RNA.html</loc></url>
+<url><loc>/articles/a4_Chromatin_Accessibility_Data.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/reference/BuildModel.html</loc></url>
+<url><loc>/reference/BuildTrainingSet.html</loc></url>
+<url><loc>/reference/BulkCells.html</loc></url>
+<url><loc>/reference/BulkCells_subfxn.html</loc></url>
+<url><loc>/reference/CalcRelativeCellProb.html</loc></url>
+<url><loc>/reference/CellProb.html</loc></url>
+<url><loc>/reference/ComputeProximityScore.html</loc></url>
+<url><loc>/reference/CorBulk.html</loc></url>
+<url><loc>/reference/Find_Sigma.html</loc></url>
+<url><loc>/reference/GeneIndex.html</loc></url>
+<url><loc>/reference/GeneIndex_subfxn.html</loc></url>
+<url><loc>/reference/Map2Latent.html</loc></url>
+<url><loc>/reference/MultiVarFit.html</loc></url>
+<url><loc>/reference/PickCells.html</loc></url>
+<url><loc>/reference/PlotConDecon.html</loc></url>
+<url><loc>/reference/PredictCellProb.html</loc></url>
+<url><loc>/reference/RunConDecon.html</loc></url>
+<url><loc>/reference/TransferFeatures.html</loc></url>
+<url><loc>/reference/bulk_gps.html</loc></url>
+<url><loc>/reference/counts_gps.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/latent_gps.html</loc></url>
+<url><loc>/reference/meta_data_gps.html</loc></url>
+<url><loc>/reference/set_zero.html</loc></url>
+<url><loc>/reference/smooth_cell_prob.html</loc></url>
+<url><loc>/reference/true_prop_gps.html</loc></url>
+<url><loc>/reference/variable_genes_gps.html</loc></url>
 </urlset>
+

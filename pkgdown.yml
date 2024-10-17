@@ -1,10 +1,9 @@
 pandoc: 3.1.11
-pkgdown: 2.0.9
+pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   a1_Intro_to_ConDecon: a1_Intro_to_ConDecon.html
   a2_B_cell_RNA: a2_B_cell_RNA.html
   a3_Spatial_RNA: a3_Spatial_RNA.html
   a4_Chromatin_Accessibility_Data: a4_Chromatin_Accessibility_Data.html
-last_built: 2024-07-01T14:25Z
-
+last_built: 2024-10-17T16:59Z
